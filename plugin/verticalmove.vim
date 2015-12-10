@@ -1,0 +1,17 @@
+" ============================================================================
+" File:        verticalmove.vim
+" Description: the wrapper of autoload
+" ============================================================================
+
+"Init {
+if exists('g:loaded_c_utils_verticalmove')
+    finish
+endif
+
+if &cp || v:version < 700
+    echom 'Please use the new vim version > 700'
+    finish
+endif
+
+let g:loaded_c_utils_verticalmove = 1
+"}

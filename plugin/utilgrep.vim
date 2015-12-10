@@ -1,0 +1,19 @@
+" ============================================================================
+" File:        utilgrep.vim
+" Description: the wrapper of autoload
+" ============================================================================
+
+"Init {
+if exists('g:loaded_c_utils_utilgrep')
+    finish
+endif
+
+if &cp || v:version < 700
+    echom 'Please use the new vim version > 700'
+    finish
+endif
+
+let g:loaded_c_utils_utilgrep = 1
+"}
+
+"Misc

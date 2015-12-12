@@ -1,16 +1,21 @@
 function! utilcscope#LoadCscope()
-    "" Searches from the directory of the current file upwards until root '/'
-    "let db = findfile("cscope.out", ".;")
-    "if (!empty(db))
-    "  let path = strpart(db, 0, match(db, "/cscope.out$"))
-    "  set nocscopeverbose " suppress 'duplicate connection' error
-    "  exe "cs add " . db . " " . path
-    "  set cscopeverbose
-    "endif
+    if exists('g:loaded_c_utils_utilcscope_have_db')
+        return
+    endif
 
-    set nocscopeverbose
-    exe "cs add cscope.out"
-    set cscopeverbose
+    " Searches from the directory of the current file upwards until root '/'
+    let db = findfile("cscope.out", ".;")
+    if (!empty(db))
+      let path = strpart(db, 0, match(db, "/cscope.out$"))
+      set nocscopeverbose " suppress 'duplicate connection' error
+      exe "cs add " . db . " " . path
+      set cscopeverbose
+      let g:loaded_c_utils_utilcscope_have_db = 1
+    endif
+
+    "set nocscopeverbose
+    "exe "cs add cscope.out"
+    "set cscopeverbose
 endfunction
 
 " Find symbol and add to quickfix

@@ -44,8 +44,12 @@ function! workspace#SaveWorkspaceCore(sf, vf)
       endif
     endif
 
-    execute "mksession! " . a:sf
-    execute "wviminfo! "  . a:vf
+    if g:wsStoreSession
+      execute "mksession! " . a:sf
+    endif
+    if g:wsStoreViminfo
+      execute "wviminfo! "  . a:vf
+    endif
     let g:wsLastWorkspaceName=fnamemodify(a:sf, ":p:r") . ".ws"
 
     if !g:wsSilence
@@ -82,8 +86,12 @@ function! workspace#SaveWorkspaceCore(sf, vf)
 
       return 0
     else
-      execute "mksession " . a:sf
-      execute "wviminfo "  . a:vf
+      if g:wsStoreSession
+        execute "mksession " . a:sf
+      endif
+      if g:wsStoreViminfo
+        execute "wviminfo "  . a:vf
+      endif
       let g:wsLastWorkspaceName=fnamemodify(a:sf, ":p:r") . ".ws"
 
       if !g:wsSilence
@@ -263,17 +271,17 @@ function! workspace#LoadWorkspaceCore(sf, vf)
 
     let s:cur_dir=getcwd()
 
-    execute "silent source " . a:sf
-    if !g:wsSilence
-      echo "workspace: Load [" . fnamemodify(a:sf, ":p") . "] sucessfully."
+    if g:wsStoreSession
+      execute "silent source " . a:sf
     endif
-
-    execute "rviminfo " . a:vf
-    if !g:wsSilence
-      echo "workspace: Load [" . fnamemodify(a:vf, ":p") . "] sucessfully."
+    if g:wsStoreViminfo
+      execute "rviminfo " . a:vf
     endif
     let g:wsLastWorkspaceName=fnamemodify(a:sf, ":p:r") . ".ws"
+
     if !g:wsSilence
+      echo "workspace: Load [" . fnamemodify(a:sf, ":p") . "] sucessfully."
+      echo "workspace: Load [" . fnamemodify(a:vf, ":p") . "] sucessfully."
       echo "Workspace Name:[" . g:wsLastWorkspaceName . "]"
     endif
 

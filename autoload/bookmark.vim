@@ -29,6 +29,7 @@ function! bookmark#LoadGroup(bookmarks_groupname)
   endif
 
   call workspace#PromptExistedWorkspaceName()
+  Savews
 endfunction
 
 " Add the current [filename, cursor position] in g:bookmarks_group under the given

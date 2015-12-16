@@ -10,21 +10,25 @@ function! bookmark#BookmarkGroups(A, L, P)
 endfunction
 
 function! bookmark#LoadGroup(bookmarks_groupname)
-  if empty(a:bookmarks_groupname)
-    echom "Empty bookmark group name."
-    return
+  let g:bookmarks_groupname = 'Default'
+  if !empty(a:bookmarks_groupname)
+    let g:bookmarks_groupname = a:bookmarks_groupname
   endif
-  let g:bookmarks_groupname = a:bookmarks_groupname
 
   if !has_key(g:BOOKMARKS, a:bookmarks_groupname)
-    echom "Create bookmark group " . a:bookmarks_groupname . " succ!"
+    if (a:bookmarks_groupname != 'Default')
+      echom "Create bookmark group " . a:bookmarks_groupname . " succ!"
+    endif
     let g:bookmarks_group = {}
     let g:BOOKMARKS[a:bookmarks_groupname] = g:bookmarks_group
   else
-    echom "Loaded bookmark group " . a:bookmarks_groupname
+    if (a:bookmarks_groupname != 'Default')
+      echom "Loaded bookmark group " . a:bookmarks_groupname
+    endif
     let g:bookmarks_group = g:BOOKMARKS[a:bookmarks_groupname]
   endif
 
+  call workspace#PromptExistedWorkspaceName()
 endfunction
 
 " Add the current [filename, cursor position] in g:bookmarks_group under the given
@@ -45,7 +49,8 @@ function! bookmark#BookmarkSet(name)
     echom "No file"
   endif
 
-  wviminfo
+  "wviminfo
+  Savews
 endfunction
 
 " Delete the user-chosen bookmark
@@ -62,7 +67,9 @@ function! bookmark#DelBookmark(name)
   call remove(g:bookmarks_group, a:name)
 
   let g:BOOKMARKS[g:bookmarks_groupname] = g:bookmarks_group
-  wviminfo
+
+  "wviminfo
+  Savews
 endfunction
 
 " Go to the user-chosen bookmark

@@ -29,7 +29,7 @@ command! -nargs=? -bar Loadws :call workspace#WorkspaceOperator(s:LoadwsCoreFunc
 
 let g:wsOverwrite = 1
 let g:wsSilence = 1
-let g:wsStoreSession = 0
+let g:wsStoreSession = 1
 let g:wsStoreViminfo = 1
 
 "call workspace#PromptExistedWorkspaceName()

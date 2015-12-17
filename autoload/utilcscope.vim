@@ -6,12 +6,12 @@ function! utilcscope#LoadCscope()
     " Searches from the directory of the current file upwards until root '/'
     let db = findfile("cscope.out", ".;")
     set nocscopeverbose " suppress 'duplicate connection' error
-    if (!empty(db))
+    if filereadable("cscope.out")
+      exe "cs add cscope.out"
+      let g:loaded_c_utils_utilcscope_have_db = 1
+    elseif (!empty(db))
       let path = strpart(db, 0, match(db, "/cscope.out$"))
       exe "cs add " . db . " " . path
-      let g:loaded_c_utils_utilcscope_have_db = 1
-    elseif filereadable("cscope.out")
-      exe "cs add cscope.out"
       let g:loaded_c_utils_utilcscope_have_db = 1
     endif
     set cscopeverbose

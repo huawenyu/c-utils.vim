@@ -39,7 +39,9 @@ function! utilquickfix#QuickFixFunction()
       unlet list[i].bufnr
     endif
     let funcName = statusline#GetFuncName()
-    let list[i].text = funcName . " " . list[i].text
+    let text = substitute(list[i].text, '^\s*\(.\{-}\)\s*$', '\1', '')
+    let text = substitute(text, '^\t*\(.\{-}\)\t*$', '\1', '')
+    let list[i].text = substitute(funcName, '\s*\(\w*\)\s*(.*', '<<\1>>', '') . " " . text
     silent! execute "cn"
   endfor
 

@@ -18,13 +18,33 @@ endfunction
 "endfunction
 "command! -bang -nargs=1 -complete=file Qfilter call s:FilterQuickfixList(<bang>0, <q-args>)
 
-function! utilquickfix#FilterQuickFixList()
+function! utilquickfix#QuickFixFilter()
   execute ":copen"
   execute ":w! /tmp/vim.qfilter"
   let l:name = input('QFilter: ')
   execute ":silent !grep '" . l:name .  "' /tmp/vim.qfilter > /tmp/vim.qfilter_"
   execute ':redraw!'
   execute ':cgetfile /tmp/vim.qfilter_'
+endfunction
+
+function! utilquickfix#QuickFixFunction()
+  execute "norm \<Enter>"
+  execute ":copen"
+  execute "norm gg\<Enter>"
+
+  let list = getqflist()
+  for i in range(len(list))
+    if has_key(list[i], 'bufnr')
+      let list[i].filename = fnamemodify(bufname(list[i].bufnr), ':p')
+      unlet list[i].bufnr
+    endif
+    let funcName = statusline#GetFuncName()
+    let list[i].text = funcName . " " . list[i].text
+    silent! execute "cn"
+  endfor
+
+  call setqflist(list)
+  execute "norm `P"
 endfunction
 
 function! utilquickfix#SaveQuickFixList(fname)

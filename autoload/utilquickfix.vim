@@ -35,7 +35,7 @@ function! utilquickfix#QuickFixFunction()
   let list = getqflist()
   for i in range(len(list))
     if has_key(list[i], 'bufnr')
-      let list[i].filename = fnamemodify(bufname(list[i].bufnr), ':p')
+      let list[i].filename = fnamemodify(bufname(list[i].bufnr), ':p:.')
       unlet list[i].bufnr
     endif
     let funcName = statusline#GetFuncName()

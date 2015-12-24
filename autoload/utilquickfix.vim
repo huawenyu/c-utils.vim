@@ -33,19 +33,36 @@ function! utilquickfix#QuickFixFunction()
   execute "norm gg\<Enter>"
 
   let list = getqflist()
-  for i in range(len(list))
-    if has_key(list[i], 'bufnr')
-      let list[i].filename = fnamemodify(bufname(list[i].bufnr), ':p:.')
-      unlet list[i].bufnr
+  let new_list = filter(list, 'get(v:val, "bufnr", 0) > 0')
+  "let new_list = []
+  "for i in range(len(list))
+  "  echom get(list[i], "bufnr", "")
+  "  "echom list[i].filename
+  "  if len(get(list[i], "bufnr", "")) > 2
+  "    call add(new_list, list[i]
+  "  endif
+  "endfor
+  "return
+
+  for i in range(len(new_list))
+    if has_key(new_list[i], 'bufnr')
+      let new_list[i].filename = fnamemodify(bufname(new_list[i].bufnr), ':p:.')
+      unlet new_list[i].bufnr
     endif
-    let funcName = statusline#GetFuncName()
-    let text = substitute(list[i].text, '^\s*\(.\{-}\)\s*$', '\1', '')
+
+    let text = substitute(new_list[i].text, '^\s*\(.\{-}\)\s*$', '\1', '')
     let text = substitute(text, '^\t*\(.\{-}\)\t*$', '\1', '')
-    let list[i].text = substitute(funcName, '\s*\(\w*\)\s*(.*', '<<\1>>', '') . " " . text
+
+    execute "norm $"
+    let funcName = statusline#GetFuncName()
+    let funcName = matchstr(funcName, '\s*\(\w*\)\s*(')[:-2]
+    let funcName = substitute(funcName, '^\s*\(.\{-}\)\s*$', '\1', '')
+    let funcName = substitute(funcName, '^\t*\(.\{-}\)\t*$', '\1', '')
+    let new_list[i].text = "<<" . funcName . ">> " . text
     silent! execute "cn"
   endfor
 
-  call setqflist(list)
+  call setqflist(new_list)
   execute "norm `P"
 endfunction
 

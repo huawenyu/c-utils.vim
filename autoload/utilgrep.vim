@@ -40,3 +40,17 @@ function! utilgrep#LocalEasyGrep(add,sel)
 
   return l:cmd . l:param . expand('<cword>') . "' ."
 endfunction
+
+function! utilgrep#Ag(sel)
+  execute "norm mP"
+  if a:sel == 1
+    " when the selection is limited to within one line
+    let l:sel_len = virtcol("'>") - virtcol("'<") + 1
+    if l:sel_len >= 2
+      return "Ag -- '" . utilgrep#_GetVisualSelection() . "'"
+    endif
+  else
+    return "Ag -- '" . expand('<cword>') . "'"
+  endif
+endfunction
+

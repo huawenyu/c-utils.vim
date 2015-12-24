@@ -54,10 +54,17 @@ function! utilquickfix#QuickFixFunction()
     let text = substitute(text, '^\t*\(.\{-}\)\t*$', '\1', '')
 
     execute "norm $"
-    let funcName = statusline#GetFuncName()
+    let func_name = statusline#GetFuncName()
+    let funcName = func_name
     let funcName = matchstr(funcName, '\s*\(\w*\)\s*(')[:-2]
-    let funcName = substitute(funcName, '^\s*\(.\{-}\)\s*$', '\1', '')
-    let funcName = substitute(funcName, '^\t*\(.\{-}\)\t*$', '\1', '')
+
+    if empty(funcName)
+      let funcName = func_name
+    else
+      let funcName = substitute(funcName, '^\s*\(.\{-}\)\s*$', '\1', '')
+      let funcName = substitute(funcName, '^\t*\(.\{-}\)\t*$', '\1', '')
+    endif
+
     let new_list[i].text = "<<" . funcName . ">> " . text
     silent! execute "cn"
   endfor

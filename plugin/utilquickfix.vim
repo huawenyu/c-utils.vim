@@ -20,7 +20,7 @@ let g:loaded_c_utils_utilquickfix = 1
 command! -nargs=0 -bar Qargs execute 'args ' . utilquickfix#QuickfixFilenames()
 
 " autofit
-autocmd FileType qf call AdjustWindowHeight(3, 8)
+autocmd FileType qf call AdjustWindowHeight(2, 4)
 function! AdjustWindowHeight(minheight, maxheight)
   exe max([min([line("$"), a:maxheight]), a:minheight]) . "wincmd _"
 endfunction

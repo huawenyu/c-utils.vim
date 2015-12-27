@@ -27,12 +27,17 @@ function! utilquickfix#QuickFixFilter()
   execute ':cgetfile /tmp/vim.qfilter_'
 endfunction
 
+" Pre-condition: the quickfix on the first line
 function! utilquickfix#QuickFixFunction()
-  execute "norm \<Enter>"
-  execute ":copen"
-  execute "norm gg\<Enter>"
-
   let list = getqflist()
+  if empty(list)
+    return
+  endif
+
+  "execute "norm \<Enter>"
+  "execute ":copen"
+  "execute "norm gg\<Enter>"
+
   let new_list = filter(list, 'get(v:val, "bufnr", 0) > 0')
   "let new_list = []
   "for i in range(len(list))
@@ -48,6 +53,8 @@ function! utilquickfix#QuickFixFunction()
     if has_key(new_list[i], 'bufnr')
       let new_list[i].filename = fnamemodify(bufname(new_list[i].bufnr), ':p:.')
       unlet new_list[i].bufnr
+    else
+      let new_list[i].filename = fnamemodify(new_list[i].filename, ':p:.')
     endif
 
     let text = substitute(new_list[i].text, '^\s*\(.\{-}\)\s*$', '\1', '')
@@ -60,10 +67,10 @@ function! utilquickfix#QuickFixFunction()
 
     if empty(funcName)
       let funcName = func_name
-    else
-      let funcName = substitute(funcName, '^\s*\(.\{-}\)\s*$', '\1', '')
-      let funcName = substitute(funcName, '^\t*\(.\{-}\)\t*$', '\1', '')
     endif
+
+    let funcName = substitute(funcName, '^\s*\(.\{-}\)\s*$', '\1', '')
+    let funcName = substitute(funcName, '^\t*\(.\{-}\)\t*$', '\1', '')
 
     let new_list[i].text = "<<" . funcName . ">> " . text
     silent! execute "cn"

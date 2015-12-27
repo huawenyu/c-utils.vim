@@ -9,7 +9,7 @@ function! utilgrep#_GetVisualSelection()
 endfunction
 
 " autocmd QuickfixCmdPost make,grep,vimgrep copen
-function! utilgrep#LocalEasyGrep(add,sel)
+function! utilgrep#Grep(add,sel)
   execute "norm mP"
   if a:add == 0
     let l:cmd = "grepadd"
@@ -30,15 +30,21 @@ function! utilgrep#LocalEasyGrep(add,sel)
                   \ -w '"
   endif
 
+  let search_str = ""
   if a:sel == 1
     " when the selection is limited to within one line
     let l:sel_len = virtcol("'>") - virtcol("'<") + 1
     if l:sel_len >= 2
-      return l:cmd . l:param . utilgrep#_GetVisualSelection() . "' ."
+      let search_str = utilgrep#_GetVisualSelection()
     endif
+  else
+    let search_str = expand('<cword>')
   endif
 
-  return l:cmd . l:param . expand('<cword>') . "' ."
+  if !empty(search_str)
+    let search_str = input("Search? ", search_str)
+    return l:cmd . l:param . search_str . "' ."
+  endif
 endfunction
 
 function! utilgrep#Ag(sel)

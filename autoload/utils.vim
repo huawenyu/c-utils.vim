@@ -45,35 +45,46 @@ endfunction
 " preconditon: mark a, mark b
 " then in <gdb> source log.crash
 function! utils#Tracecrash()
-	exec ":silent %normal \<ESC>0i#"
-	exec ":'a,'b normal df["
-	exec ":'a,'b normal f]d$"
-	exec ":'a,'b normal Il *"
+  exec ":silent %normal \<ESC>0i#"
+  exec ":'a,'b normal df["
+  exec ":'a,'b normal f]d$"
+  exec ":'a,'b normal Il *"
+endfunction
+
+function! utils#VoomInsert()
+  let number = 1
+  if v:count > 0
+    let number = v:count
+  endif
+
+  let cur_word = expand('<cword>')
+  let line_ins = "# " . cur_word . " {{{" . "" . number . "}}}"
+  execute "put =line_ins"
 endfunction
 
 function! utils#GotoFileWithLineNum()
-    " filename under the cursor
-    let file_name = expand('<cfile>')
-    if !strlen(file_name)
-        echo 'NO FILE UNDER CURSOR'
-        return
-    endif
+  " filename under the cursor
+  let file_name = expand('<cfile>')
+  if !strlen(file_name)
+    echo 'NO FILE UNDER CURSOR'
+    return
+  endif
 
-    " look for a line number separated by a :
-    if search('\%#\f*:\zs[0-9]\+')
-        " change the 'iskeyword' option temporarily to pick up just numbers
-        let temp = &iskeyword
-        set iskeyword=48-57
-        let line_number = expand('<cword>')
-        exe 'set iskeyword=' . temp
-    endif
+  " look for a line number separated by a :
+  if search('\%#\f*:\zs[0-9]\+')
+    " change the 'iskeyword' option temporarily to pick up just numbers
+    let temp = &iskeyword
+    set iskeyword=48-57
+    let line_number = expand('<cword>')
+    exe 'set iskeyword=' . temp
+  endif
 
-    " edit the file
-    exe 'e '.file_name
+  " edit the file
+  exe 'e '.file_name
 
-    " if there is a line number, go to it
-    if exists('line_number')
-        exe line_number
-    endif
+  " if there is a line number, go to it
+  if exists('line_number')
+    exe line_number
+  endif
 endfunction
 

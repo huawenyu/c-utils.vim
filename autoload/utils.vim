@@ -59,6 +59,7 @@ function! utils#VoomInsert()
 
   let cur_word = expand('<cword>')
   let line_ins = "# " . cur_word . " {{{" . "" . number . "}}}"
+  norm O
   execute "put =line_ins"
 endfunction
 

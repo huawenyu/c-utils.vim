@@ -67,7 +67,9 @@ function! utils#VoomInsert(vsel)
     endif
 
     norm O
+    let len = len(line_ins)
     execute "put =line_ins"
+    call cursor(line('.'), len - 3)
 endfunction
 
 function! utils#GotoFileWithLineNum()

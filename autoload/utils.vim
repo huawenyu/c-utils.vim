@@ -51,16 +51,23 @@ function! utils#Tracecrash()
   exec ":'a,'b normal Il *"
 endfunction
 
-function! utils#VoomInsert()
-  let number = 1
-  if v:count > 0
-    let number = v:count
-  endif
+function! utils#VoomInsert(vsel)
+    let number = 1
+    if v:count > 0
+        let number = v:count
+    endif
 
-  let cur_word = expand('<cword>')
-  let line_ins = "# " . cur_word . " {{{" . "" . number . "}}}"
-  norm O
-  execute "put =line_ins"
+    if a:vsel
+        let temp = @s
+        norm! gv"sy
+        let line_ins = "# " . @s . " {{{" . "" . number . "}}}"
+        let @s = temp
+    else
+        let line_ins = "# " . expand('<cword>') . " {{{" . "" . number . "}}}"
+    endif
+
+    norm O
+    execute "put =line_ins"
 endfunction
 
 function! utils#GotoFileWithLineNum()

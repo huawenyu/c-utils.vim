@@ -110,4 +110,3 @@ function! utilgrep#SearchWithDispatch(cmd, args)
     let &l:errorformat = l:errorformat_bak
   endtry
 endfunction
-

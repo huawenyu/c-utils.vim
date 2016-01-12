@@ -71,16 +71,15 @@ endfunction
 function! utilgrep#Grep(cmd, args)
   call utilgrep#FormatForProgram(g:grepprg)
 
-  call utilgrep#SearchWithDispatch(a:cmd, a:args)
-  "if exists(":Dispatch")
-  "  if match(a:cmd, "^l.*") != -1
-  "    call utilgrep#SearchWithGrep(a:cmd, a:args)
-  "  else
-  "    call utilgrep#SearchWithDispatch(a:cmd, a:args)
-  "  endif
-  "else
-  "  call utilgrep#SearchWithGrep(a:cmd, a:args)
-  "endif
+  if exists(":Dispatch")
+    if match(a:cmd, "^l.*") != -1
+      call utilgrep#SearchWithGrep(a:cmd, a:args)
+    else
+      call utilgrep#SearchWithDispatch(a:cmd, a:args)
+    endif
+  else
+    call utilgrep#SearchWithGrep(a:cmd, a:args)
+  endif
 endfunction
 
 function! utilgrep#SearchWithGrep(cmd, args)

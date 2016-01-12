@@ -16,4 +16,24 @@ endif
 let g:loaded_c_utils_utilgrep = 1
 "}
 
+" Grep utility
+if !exists("g:grepprg")
+  let output = system("git rev-parse --is-inside-work-tree")
+  let is_git_repo = v:shell_error == 0
+
+  if is_git_repo
+    let g:grepprg="git --no-pager grep -n"
+  else
+    if executable("ag")
+      let g:grepprg="ag --nogroup --column --hidden"
+    else
+      let g:grepprg="grep -rnH "
+    endif
+  endif
+endif
+
 "Misc
+command! -bang -nargs=* -complete=file Grep call utilgrep#Grep('grep<bang>',<q-args>)
+command! -bang -nargs=* -complete=file GrepAdd call utilgrep#Grep('grepadd<bang>', <q-args>)
+command! -bang -nargs=* -complete=file LGrep call utilgrep#Grep('lgrep<bang>', <q-args>)
+command! -bang -nargs=* -complete=file LGrepAdd call utilgrep#Grep('lgrepadd<bang>', <q-args>)

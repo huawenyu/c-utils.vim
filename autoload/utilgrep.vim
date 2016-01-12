@@ -11,23 +11,12 @@ endfunction
 " autocmd QuickfixCmdPost make,grep,vimgrep copen
 function! utilgrep#Grep(add,sel)
   execute "norm mP"
+
+  let l:cmd = "Grep"
+  let l:param = ""
+
   if a:add == 0
-    let l:cmd = "grepadd"
-    let l:param = "! -Inr --include='*.[ch]' -- '"
-  elseif a:add == 1
-    let l:cmd = "grep"
-    let l:param = "! -Inr --include='*.[ch]' -- '"
-  elseif a:add == 2
-    let l:cmd = "grep"
-    let l:param = "! -Inr
-                  \ --exclude='patch.*'
-                  \ --exclude='cscope.*'
-                  \ --exclude='tags'
-                  \ --exclude='TAGS'
-                  \ --exclude='\*.svn\*'
-                  \ --exclude='.svn'
-                  \ --exclude='.git'
-                  \ -w '"
+    let l:cmd = "GrepAdd"
   endif
 
   let search_str = ""
@@ -43,20 +32,7 @@ function! utilgrep#Grep(add,sel)
 
   if !empty(search_str)
     let search_str = input("Search? ", search_str)
-    return l:cmd . l:param . search_str . "' ."
-  endif
-endfunction
-
-function! utilgrep#Ag(sel)
-  execute "norm mP"
-  if a:sel == 1
-    " when the selection is limited to within one line
-    let l:sel_len = virtcol("'>") - virtcol("'<") + 1
-    if l:sel_len >= 2
-      return "Grep -- '" . utilgrep#_GetVisualSelection() . "'"
-    endif
-  else
-    return "Grep -- '" . expand('<cword>') . "'"
+    return l:cmd .' '. l:param . " -- '".search_str."'"
   endif
 endfunction
 
@@ -68,7 +44,7 @@ function! utilgrep#FormatForProgram(program)
   endif
 endfunction
 
-function! utilgrep#Grep(cmd, args)
+function! utilgrep#_Grep(cmd, args)
   call utilgrep#FormatForProgram(g:grepprg)
 
   if exists(":Dispatch")

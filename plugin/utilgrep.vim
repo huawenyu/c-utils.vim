@@ -27,13 +27,14 @@ if !exists("g:grepprg")
     if executable("ag")
       let g:grepprg="ag --nogroup --column --hidden"
     else
-      let g:grepprg="grep -rnH "
+      let g:grepprg="grep -rnH"
     endif
   endif
 endif
 
 "Misc
-command! -bang -nargs=* -complete=file Grep call utilgrep#Grep('grep<bang>',<q-args>)
-command! -bang -nargs=* -complete=file GrepAdd call utilgrep#Grep('grepadd<bang>', <q-args>)
-command! -bang -nargs=* -complete=file LGrep call utilgrep#Grep('lgrep<bang>', <q-args>)
-command! -bang -nargs=* -complete=file LGrepAdd call utilgrep#Grep('lgrepadd<bang>', <q-args>)
+command! -bang -nargs=* -complete=file Grep call utilgrep#_Grep('grep<bang>',<q-args>)
+command! -bang -nargs=* -complete=file GrepAdd call utilgrep#_Grep('grepadd<bang>', <q-args>)
+command! -bang -nargs=* -complete=file LGrep call utilgrep#_Grep('lgrep<bang>', <q-args>)
+command! -bang -nargs=* -complete=file LGrepAdd call utilgrep#_Grep('lgrepadd<bang>', <q-args>)
+

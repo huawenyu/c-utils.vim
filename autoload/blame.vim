@@ -1,5 +1,5 @@
 function! blame#GitBlameCurrent()
-    return "!git --no-pager blame -L" . (line(".") - 5) . ",+10 HEAD -- " . expand("%p")
+    execute "!git --no-pager blame -L" . (line(".") - 5) . ",+10 HEAD -- " . expand("%p")
 endfunction
 
 function! blame#SvnBlameCurrent()

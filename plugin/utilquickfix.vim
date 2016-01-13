@@ -35,16 +35,16 @@ augroup quickfix
   autocmd QuickFixCmdPost lgrep,lmake,lgrepadd,lvimgrep,lvimgrepadd,lfile,lgetfile,laddfile lwindow
 augroup END
 
-nmap <silent> <leader>j1 :call utilquickfix#SaveQuickFixList('/tmp/vim.qfile1') <CR>
-nmap <silent> <leader>j2 :call utilquickfix#SaveQuickFixList('/tmp/vim.qfile2') <CR>
-nmap <silent> <leader>j3 :call utilquickfix#SaveQuickFixList('/tmp/vim.qfile3') <CR>
-nmap <silent> <leader>j4 :call utilquickfix#SaveQuickFixList('/tmp/vim.qfile4') <CR>
-nmap <silent> <leader>j5 :call utilquickfix#SaveQuickFixList('/tmp/vim.qfile5') <CR>
-nmap <silent> <leader>;1 :call utilquickfix#LoadQuickFixList('/tmp/vim.qfile1') <CR>
-nmap <silent> <leader>;2 :call utilquickfix#LoadQuickFixList('/tmp/vim.qfile2') <CR>
-nmap <silent> <leader>;3 :call utilquickfix#LoadQuickFixList('/tmp/vim.qfile3') <CR>
-nmap <silent> <leader>;4 :call utilquickfix#LoadQuickFixList('/tmp/vim.qfile4') <CR>
-nmap <silent> <leader>;5 :call utilquickfix#LoadQuickFixList('/tmp/vim.qfile5') <CR>
+nmap <silent> <leader>j1 :call utilquickfix#SaveQuickFixList('/tmp/vim.qfile1') \| echom "SaveQuickFixList to /tmp/vim.qfile#" <CR>
+nmap <silent> <leader>j2 :call utilquickfix#SaveQuickFixList('/tmp/vim.qfile2') \| echom "SaveQuickFixList to /tmp/vim.qfile#" <CR>
+nmap <silent> <leader>j3 :call utilquickfix#SaveQuickFixList('/tmp/vim.qfile3') \| echom "SaveQuickFixList to /tmp/vim.qfile#" <CR>
+nmap <silent> <leader>j4 :call utilquickfix#SaveQuickFixList('/tmp/vim.qfile4') \| echom "SaveQuickFixList to /tmp/vim.qfile#" <CR>
+nmap <silent> <leader>j5 :call utilquickfix#SaveQuickFixList('/tmp/vim.qfile5') \| echom "SaveQuickFixList to /tmp/vim.qfile#" <CR>
+nmap <silent> <leader>;1 :call utilquickfix#LoadQuickFixList('/tmp/vim.qfile1') \| echom "LoadQuickFixList from /tmp/vim.qfile#" <CR>
+nmap <silent> <leader>;2 :call utilquickfix#LoadQuickFixList('/tmp/vim.qfile2') \| echom "LoadQuickFixList from /tmp/vim.qfile#" <CR>
+nmap <silent> <leader>;3 :call utilquickfix#LoadQuickFixList('/tmp/vim.qfile3') \| echom "LoadQuickFixList from /tmp/vim.qfile#" <CR>
+nmap <silent> <leader>;4 :call utilquickfix#LoadQuickFixList('/tmp/vim.qfile4') \| echom "LoadQuickFixList from /tmp/vim.qfile#" <CR>
+nmap <silent> <leader>;5 :call utilquickfix#LoadQuickFixList('/tmp/vim.qfile5') \| echom "LoadQuickFixList from /tmp/vim.qfile#" <CR>
 
 "quickfix keymap import by ag.vim
 "e    to open file and close the quickfix window

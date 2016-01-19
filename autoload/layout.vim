@@ -1,17 +1,17 @@
 function! layout#DefaultLayout()
-    exec "normal mP"
+    "exec "normal mP"
 
     exec ':silent! grep -n -w ' . expand('<cword>') . ' *.' . expand('%:e')
-    exec ':redraw!'
+    redraw!
     "exec ":silent vimgrep! /\\<" . expand('<cword>') . "\\>/\\Cgj " . expand('%:p')
 
-    exec ":silent pclose"
-    exec ":silent cclose"
+    pclose
+    cclose
     exec ":silent psearch " . expand('<cword>')
-    exec "normal \<C-W>H"
-    exec ":silent copen"
-    exec "normal \<C-W>J"
-    exec "normal \<C-W>k"
+    wincmd H
+    copen
+    wincmd J
+    wincmd p
 
-    exec "normal `P"
+    "exec "normal `P"
 endfunction

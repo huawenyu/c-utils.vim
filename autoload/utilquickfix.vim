@@ -27,29 +27,21 @@ function! utilquickfix#QuickFixFilter()
   execute ':cgetfile /tmp/vim.qfilter_'
 endfunction
 
-" Pre-condition: the quickfix on the first line
 function! utilquickfix#QuickFixFunction()
   let list = getqflist()
   if empty(list)
     return
   endif
 
-  "execute "norm \<Enter>"
-  "execute ":copen"
-  "execute "norm gg\<Enter>"
+  silent! copen
+  silent! cfirst
 
   let new_list = filter(list, 'get(v:val, "bufnr", 0) > 0')
-  "let new_list = []
-  "for i in range(len(list))
-  "  echom get(list[i], "bufnr", "")
-  "  "echom list[i].filename
-  "  if len(get(list[i], "bufnr", "")) > 2
-  "    call add(new_list, list[i]
-  "  endif
-  "endfor
-  "return
-
   for i in range(len(new_list))
+    if has_key(new_list[i], 'type') && new_list[i].type == 'F'
+      continue
+    endif
+
     if has_key(new_list[i], 'bufnr')
       let new_list[i].filename = fnamemodify(bufname(new_list[i].bufnr), ':p:.')
       unlet new_list[i].bufnr
@@ -73,10 +65,12 @@ function! utilquickfix#QuickFixFunction()
     let funcName = substitute(funcName, '^\t*\(.\{-}\)\t*$', '\1', '')
 
     let new_list[i].text = "<<" . funcName . ">> " . text
-    silent! execute "cn"
+    let new_list[i].type = "F"
+    silent! cnext
   endfor
 
-  call setqflist(new_list)
+  "let w:quickfix_title = len(new_list)
+  call setqflist(new_list, 'r')
   execute "norm `P"
 endfunction
 
@@ -87,6 +81,7 @@ function! utilquickfix#SaveQuickFixList(fname)
       let list[i].filename = fnamemodify(bufname(list[i].bufnr), ':p')
       unlet list[i].bufnr
     endif
+    let list[i].valid = 3
   endfor
   let string = string(list)
   let lines = split(string, "\n")
@@ -97,6 +92,15 @@ function! utilquickfix#LoadQuickFixList(fname)
   if filereadable(a:fname)
     let lines = readfile(a:fname)
     let string = join(lines, "\n")
-    call setqflist(eval(string))
+    "call setqflist(eval(string))
+
+    let list = eval(string)
+    for i in range(len(list))
+      if has_key(list[i], 'filename')
+        let list[i].filename = fnamemodify(list[i].filename, ':p:.')
+      endif
+    endfor
+
+    call setqflist(list, 'r')
   endif
 endfunction

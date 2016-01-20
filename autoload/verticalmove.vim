@@ -17,7 +17,7 @@ function! verticalmove#VerticalMoveDown(down)
     endif
 
     let l:count = 0
-    while l:cursor_row > 0 && l:count < 1000
+    while l:cursor_row > 0 && l:count < 10000
       "echom "current: " . l:cursor_row . ":". l:cursor_col . " " . getline(l:cursor_row)[l:cursor_col - 1]
       ":echo strtrans(getline('.')[col('.')-1])
 

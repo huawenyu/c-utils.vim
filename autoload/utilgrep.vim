@@ -9,7 +9,7 @@ function! utilgrep#_GetVisualSelection()
 endfunction
 
 " autocmd QuickfixCmdPost make,grep,vimgrep copen
-function! utilgrep#Grep(add,sel)
+function! utilgrep#Grep(add, sel, ...)
   execute "norm mP"
 
   let l:cmd = "Grep"
@@ -32,7 +32,11 @@ function! utilgrep#Grep(add,sel)
 
   if !empty(search_str)
     let search_str = input("Search? ", search_str)
-    return l:cmd .' '. l:param . " -- '".search_str."'"
+    if exists("a:000")
+      return l:cmd .' '. l:param . " -- '".search_str."' ".join(a:000, " ")
+    else
+      return l:cmd .' '. l:param . " -- '".search_str."'"." "
+    endif
   endif
 endfunction
 

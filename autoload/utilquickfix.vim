@@ -85,12 +85,15 @@ function! utilquickfix#SaveQuickFixList(fname)
   endfor
   let string = string(list)
   let lines = split(string, "\n")
+  "call add(lines, w:quickfix_title)
   call writefile(lines, a:fname)
 endfunction
 
 function! utilquickfix#LoadQuickFixList(fname)
   if filereadable(a:fname)
     let lines = readfile(a:fname)
+    "let w:quickfix_title = lines[0]
+    "let string = join(lines[1:], "\n")
     let string = join(lines, "\n")
     "call setqflist(eval(string))
 

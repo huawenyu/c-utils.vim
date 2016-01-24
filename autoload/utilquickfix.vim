@@ -38,7 +38,17 @@ function! utilquickfix#QuickFixFunction()
 
   let new_list = filter(list, 'get(v:val, "bufnr", 0) > 0')
   for i in range(len(new_list))
+    exec "cc ". (i+1)
+
     if has_key(new_list[i], 'type') && new_list[i].type == 'F'
+      continue
+    endif
+
+    if has_key(new_list[i], 'filename') && empty(new_list[i].filename) || new_list[i].lnum == 0
+      continue
+    endif
+
+    if has_key(new_list[i], 'lnum') && new_list[i].lnum == 0
       continue
     endif
 
@@ -66,7 +76,6 @@ function! utilquickfix#QuickFixFunction()
 
     let new_list[i].text = "<<" . funcName . ">> " . text
     let new_list[i].type = "F"
-    silent! cnext
   endfor
 
   "let w:quickfix_title = len(new_list)

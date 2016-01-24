@@ -106,12 +106,7 @@ function! utils#GetSelected(fname)
   let lines[-1] = lines[-1][: col2 - (&selection == 'inclusive' ? 1 : 2)]
   let lines[0] = lines[0][col1 - 1:]
 
-  if lnum1 != lnum2
-    let ret_str = join(lines, "\n")
-  else
-    let ret_str = lines
-  endif
-
+  let ret_str = join(lines, "\n")
   if empty(a:fname)
     return ret_str
   else

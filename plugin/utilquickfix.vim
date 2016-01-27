@@ -23,7 +23,7 @@ command! -nargs=1 -complete=custom,utilquickfix#Complete QSave call utilquickfix
 command! -nargs=1 -complete=custom,utilquickfix#Complete QLoad call utilquickfix#LoadQuickFixList(<f-args>)
 
 " autofit
-autocmd FileType qf call AdjustWindowHeight(2, 4)
+autocmd FileType qf call AdjustWindowHeight(2, 8)
 function! AdjustWindowHeight(minheight, maxheight)
   exe max([min([line("$"), a:maxheight]), a:minheight]) . "wincmd _"
 endfunction

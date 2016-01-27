@@ -45,11 +45,11 @@ set cscopequickfix=s0,c0,d0,i0,t-,e-
 nmap <leader>fs :cs find s <C-R>=expand("<cword>")<CR><CR>
 nmap <leader>fg :cs find g <C-R>=expand("<cword>")<CR><CR>
 nmap <leader>fc :cs find c <C-R>=expand("<cword>")<CR><CR>
-nmap <leader>fd :cs find d <C-R>=expand("<cword>")<CR><CR>
-nmap <leader>ft :cs find t <C-R>=expand("<cword>")<CR>
-nmap <leader>fe :cs find e <C-R>=expand("<cword>")<CR>
 nmap <leader>ff :cs find f <C-R>=expand("<cfile>")<CR>
-nmap <leader>fi :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+nmap <leader>fd :cs find d <C-R>=expand("<cword>")<CR><CR>
+"nmap <leader>ft :cs find t <C-R>=expand("<cword>")<CR>
+"nmap <leader>fe :cs find e <C-R>=expand("<cword>")<CR>
+"nmap <leader>fi :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
 
 nmap <leader>] :cs find g <C-R>=expand("<cword>")<CR><CR>
 

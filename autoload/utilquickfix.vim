@@ -121,7 +121,26 @@ function! utilquickfix#QuickFixFunction()
   execute "norm `P"
 endfunction
 
+function! utilquickfix#Complete(A, L, P)
+  if filereadable(g:utilquickfix_file)
+    let lines = readfile(g:utilquickfix_file)
+    let string = join(lines, "\n")
+    let key_value = eval(string)
+    return join(sort(keys(key_value)), "\n")
+  else
+    return ""
+  endif
+endfunction
+
 function! utilquickfix#SaveQuickFixList(fname)
+  if filereadable(g:utilquickfix_file)
+    let lines = readfile(g:utilquickfix_file)
+    let string = join(lines, "\n")
+    let key_value = eval(string)
+  else
+    let key_value = {}
+  endif
+
   let list = getqflist()
   for i in range(len(list))
     if has_key(list[i], 'bufnr')
@@ -130,27 +149,44 @@ function! utilquickfix#SaveQuickFixList(fname)
     endif
     let list[i].valid = 3
   endfor
-  let string = string(list)
+
+  let key_value[a:fname] = list
+  let string = string(key_value)
   let lines = split(string, "\n")
-  "call add(lines, w:quickfix_title)
-  call writefile(lines, a:fname)
+  call writefile(lines, g:utilquickfix_file)
+
 endfunction
 
 function! utilquickfix#LoadQuickFixList(fname)
-  if filereadable(a:fname)
-    let lines = readfile(a:fname)
-    "let w:quickfix_title = lines[0]
-    "let string = join(lines[1:], "\n")
+  if filereadable(g:utilquickfix_file)
+    let lines = readfile(g:utilquickfix_file)
     let string = join(lines, "\n")
-    "call setqflist(eval(string))
+    let key_value = eval(string)
+    if has_key(key_value, a:fname)
+      let list = key_value[a:fname]
 
-    let list = eval(string)
-    for i in range(len(list))
-      if has_key(list[i], 'filename')
-        let list[i].filename = fnamemodify(list[i].filename, ':p:.')
+      for i in range(len(list))
+        if has_key(list[i], 'filename')
+          let list[i].filename = fnamemodify(list[i].filename, ':p:.')
+        endif
+      endfor
+
+      call setqflist(list, 'r')
+      let w_qf = genutils#GetQuickfixWinnr()
+      if w_qf == 0
+        call genutils#MarkActiveWindow()
+        copen
+        call genutils#RestoreActiveWindow()
       endif
-    endfor
 
-    call setqflist(list, 'r')
+      let w_qf = genutils#GetQuickfixWinnr()
+      if w_qf > 0
+        call genutils#MarkActiveWindow()
+        call genutils#MoveCursorToWindow(w_qf)
+        let w:quickfix_title = a:fname
+        call genutils#RestoreActiveWindow()
+      endif
+
+    endif
   endif
 endfunction

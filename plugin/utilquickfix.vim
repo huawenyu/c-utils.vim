@@ -19,6 +19,8 @@ let g:loaded_c_utils_utilquickfix = 1
 "autocmd
 command! -nargs=0 -bar Qargs execute 'args ' . utilquickfix#QuickfixFilenames()
 command! -nargs=1 Function call utilquickfix#_Function(<f-args>)
+command! -nargs=1 -complete=custom,utilquickfix#Complete QSave call utilquickfix#SaveQuickFixList(<f-args>)
+command! -nargs=1 -complete=custom,utilquickfix#Complete QLoad call utilquickfix#LoadQuickFixList(<f-args>)
 
 " autofit
 autocmd FileType qf call AdjustWindowHeight(2, 4)
@@ -47,15 +49,8 @@ nmap <silent> <leader>j3 :call utilquickfix#LoadQuickFixList('/tmp/vim.qfile3') 
 nmap <silent> <leader>j4 :call utilquickfix#LoadQuickFixList('/tmp/vim.qfile4') \| echom "LoadQuickFixList from /tmp/vim.qfile#" <CR>
 nmap <silent> <leader>j5 :call utilquickfix#LoadQuickFixList('/tmp/vim.qfile5') \| echom "LoadQuickFixList from /tmp/vim.qfile#" <CR>
 
-"quickfix keymap import by ag.vim
-"e    to open file and close the quickfix window
-"o    to open (same as enter)
-"go   to preview file (open but maintain focus on ag.vim results)
-"t    to open in new tab
-"T    to open in new tab silently
-"h    to open in horizontal split
-"H    to open in horizontal split silently
-"v    to open in vertical split
-"gv   to open in vertical split silently
-"q    to close the quickfix window
+if !exists("g:utilquickfix_file")
+  let g:utilquickfix_file = "/tmp/vim.quickfix"
+endif
 
+autocmd Filetype qf setlocal stl=%t\ (%l\ of\ %L)%{exists('w:quickfix_title')?\ '\ '.w:quickfix_title\ :\ ''}\ %=%-15(%l,%c%V%)\ %P

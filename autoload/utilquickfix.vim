@@ -29,7 +29,12 @@ endfunction
 function! utilquickfix#_Function(funcname)
   execute ":silent !taglist.awk " . a:funcname
   execute ':redraw!'
-  execute ':cgetfile /tmp/vim.taglist'
+  if filereadable('/tmp/vim.taglist')
+    let lines = readfile('/tmp/vim.taglist')
+    if !empty(lines)
+      execute ':cgetfile /tmp/vim.taglist'
+    endif
+  endif
 endfunction
 
 "command! -nargs=1 Function call utilquickfix#Function(<f-args>)

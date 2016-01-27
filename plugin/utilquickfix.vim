@@ -18,7 +18,6 @@ let g:loaded_c_utils_utilquickfix = 1
 
 "autocmd
 command! -nargs=0 -bar Qargs execute 'args ' . utilquickfix#QuickfixFilenames()
-command! -nargs=1 Function call utilquickfix#_Function(<f-args>)
 command! -nargs=1 -complete=custom,utilquickfix#Complete QSave call utilquickfix#SaveQuickFixList(<f-args>)
 command! -nargs=1 -complete=custom,utilquickfix#Complete QLoad call utilquickfix#LoadQuickFixList(<f-args>)
 

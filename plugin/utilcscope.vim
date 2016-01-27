@@ -52,6 +52,7 @@ nmap <leader>fd :cs find d <C-R>=expand("<cword>")<CR><CR>
 "nmap <leader>fi :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
 
 nmap <leader>] :cs find g <C-R>=expand("<cword>")<CR><CR>
+command! -nargs=* Function call utilcscope#_Function(<f-args>)
 
 "nmap <F11> :!find . -iname '*.c' -o -iname '*.cpp' -o -iname '*.h' -o -iname '*.hpp' > cscope.files<CR>
 "    \:!cscope -b -i cscope.files -f cscope.out<CR>

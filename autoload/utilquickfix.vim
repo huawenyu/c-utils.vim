@@ -18,25 +18,6 @@ endfunction
 "endfunction
 "command! -bang -nargs=1 -complete=file Qfilter call s:FilterQuickfixList(<bang>0, <q-args>)
 
-function! utilquickfix#Function(sel)
-  if a:sel
-    return "Function ".utils#GetSelected("")
-  else
-    return "Function ".expand('<cword>')
-  endif
-endfunction
-
-function! utilquickfix#_Function(funcname)
-  execute ":silent !taglist.awk " . a:funcname
-  execute ':redraw!'
-  if filereadable('/tmp/vim.taglist')
-    let lines = readfile('/tmp/vim.taglist')
-    if !empty(lines)
-      execute ':cgetfile /tmp/vim.taglist'
-    endif
-  endif
-endfunction
-
 "command! -nargs=1 Function call utilquickfix#Function(<f-args>)
 "function! utilquickfix#Function(name)
 "  " Retrieve tags of the 'f' kind

@@ -32,3 +32,33 @@ function! utilcscope#CscopeSymbol()
   exec "normal `P"
   let &cscopequickfix = l:old_cscopeflag
 endfunction
+
+function! utilcscope#Function(type, sel)
+  if a:sel
+    return "Function ".a:type." ".utils#GetSelected("")." "
+  else
+    return "Function ".a:type." ".expand('<cword>')." "
+  endif
+endfunction
+
+function! utilcscope#_Function(type, sname, ...)
+  Decho "utilcscope#_Function a:0=" . a:0
+
+  if a:0 > 0
+    let cmd_str = ":silent !taglist.awk ".a:type." ".a:sname." ".a:1
+  else
+    let cmd_str = ":silent !taglist.awk ".a:type." ".a:sname
+  endif
+
+  Decho cmd_str
+  execute cmd_str
+
+  execute ':redraw!'
+  if filereadable('/tmp/vim.taglist')
+    let lines = readfile('/tmp/vim.taglist')
+    if !empty(lines)
+      execute ':cgetfile /tmp/vim.taglist'
+    endif
+  endif
+endfunction
+

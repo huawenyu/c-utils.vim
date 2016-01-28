@@ -33,11 +33,19 @@ function! utilcscope#CscopeSymbol()
   let &cscopequickfix = l:old_cscopeflag
 endfunction
 
-function! utilcscope#Function(type, sel)
+function! utilcscope#FindFunc(sel)
   if a:sel
-    return "Function ".a:type." ".utils#GetSelected("")." "
+    return "FindFunc ".utils#GetSelected("")." "
   else
-    return "Function ".a:type." ".expand('<cword>')." "
+    return "FindFunc ".expand('<cword>')." "
+  endif
+endfunction
+
+function! utilcscope#FindVar(sel)
+  if a:sel
+    return "FindVar ".utils#GetSelected("")." "
+  else
+    return "FindVar ".expand('<cword>')." "
   endif
 endfunction
 

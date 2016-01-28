@@ -50,12 +50,12 @@ nmap <leader>fd :cs find d <C-R>=expand("<cword>")<CR><CR>
 "nmap <leader>ft :cs find t <C-R>=expand("<cword>")<CR>
 "nmap <leader>fe :cs find e <C-R>=expand("<cword>")<CR>
 "nmap <leader>fi :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-"nmap <leader>ft :call utilcscope#CscopeSymbol() <CR>
+nmap <leader>fe :call utilcscope#CscopeSymbol() <CR>
 nmap <leader>fi :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
 nmap <leader>ft :<C-\>e utilcscope#FindFunc(0) <CR>
 vmap <leader>ft :<C-\>e utilcscope#FindFunc(1) <CR>
-nmap <leader>fe :<C-\>e utilcscope#FindVar(0) <CR>
-vmap <leader>fe :<C-\>e utilcscope#FindVar(1) <CR>
+"nmap <leader>fe :<C-\>e utilcscope#FindVar(0) <CR>
+"vmap <leader>fe :<C-\>e utilcscope#FindVar(1) <CR>
 
 nmap <leader>] :cs find g <C-R>=expand("<cword>")<CR><CR>
 command! -nargs=* FindFunc call utilcscope#_Function("function", <f-args>)

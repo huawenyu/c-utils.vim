@@ -8,6 +8,19 @@ function! utils#IsLeftMostWindow()
     return 0
 endfunction
 
+" Refresh files
+function utils#RefreshWindows()
+  call genutils#MarkActiveWindow()
+  for nr in range(1, winnr('$'))
+    silent! exec nr . "wincmd w"
+    if getwinvar(1, "&modifiable") == 1
+      silent! e!
+    endif
+  endfor
+  call genutils#RestoreActiveWindow()
+endfunction
+
+
 " Space: show columnline or open-declaration
 function! utils#ColumnlineOrDeclaration()
   let l:col = col('.')

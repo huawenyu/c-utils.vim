@@ -132,5 +132,5 @@ function! utils#GetSelected(fname)
 endfunction
 
 function utils#AppendToFile(file, lines)
-  call writefile(readfile(a:file)+a:lines, a:file)
+  call writefile(a:lines, a:file, "a")
 endfunction

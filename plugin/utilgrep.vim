@@ -25,7 +25,8 @@ if !exists("g:grepprg")
     let g:grepprg="git --no-pager grep -n"
   else
     if executable("ag")
-      let g:grepprg="ag --nogroup --column --hidden"
+      "let g:grepprg="ag --nogroup --column --hidden"
+      let g:grepprg="ag --nogroup"
     else
       let g:grepprg="grep -rnH"
     endif

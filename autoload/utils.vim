@@ -42,9 +42,9 @@ function! utils#ColumnlineOrDeclaration()
       let g:colorcolumn_col = l:col
     endif
   else
+    call genutils#MarkActiveWindow()
     execute ":ptjump " . expand("<cword>")
-    execute "norm! \<c-w>pzt\<c-w>p"
-    "norm! ^wpzt^wp
+    call genutils#RestoreActiveWindow()
   endif
 endfunction
 

@@ -80,3 +80,16 @@ function! utilgrep#SearchWithDispatch(cmd, args)
     let &l:errorformat = l:errorformat_bak
   endtry
 endfunction
+
+function! utilgrep#ReplaceAll(org_str, to_str)
+  if a:org_str ==# a:to_str
+    echo "Same string, NOP!"
+    return
+  endif
+
+  let cmd_str = ":silent !replace-str.sh ".a:org_str." ".a:to_str
+  Decho cmd_str
+  execute cmd_str
+  "execute ':redraw!'
+endfunction
+

@@ -73,13 +73,14 @@ function! utils#VoomInsert(vsel)
         let number = v:count
     endif
 
+    let perc = line('.') * 100 / line('$')
     if a:vsel
         let temp = @s
         norm! gv"sy
-        let line_ins = "# " . @s . " {{{" . "" . number . "}}}"
+        let line_ins = "#" . perc ."% ". @s . " {{{" . "" . number . "}}}"
         let @s = temp
     else
-        let line_ins = "# " . expand('<cword>') . " {{{" . "" . number . "}}}"
+        let line_ins = "#" . perc ."% ". expand('<cword>') . " {{{" . "" . number . "}}}"
     endif
 
     norm O

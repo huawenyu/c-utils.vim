@@ -11,13 +11,26 @@ endfunction
 " Refresh files
 function utils#RefreshWindows()
   call genutils#MarkActiveWindow()
-  for nr in range(1, winnr('$'))
-    silent! exec nr . "wincmd w"
-    if getwinvar(1, "&modifiable") == 1
-      silent! e!
-    endif
+  let act_tabnr = tabpagenr()
+  let counts = 0
+
+  for tab_nr in range(1, tabpagenr('$'))
+    silent! exec tab_nr . "tabnext"
+
+    let act_nr = winnr()
+    for nr in range(1, winnr('$'))
+      silent! exec nr . "wincmd w"
+      if getwinvar(1, "&modifiable") == 1
+        silent! e!
+        let counts += 1
+      endif
+    endfor
+    silent! exec act_nr . "wincmd w"
   endfor
+
+  silent! exec act_tabnr . "tabnext"
   call genutils#RestoreActiveWindow()
+  echom "Reload " . counts . " times!"
 endfunction
 
 

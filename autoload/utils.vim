@@ -56,7 +56,7 @@ function! utils#ColumnlineOrDeclaration()
     endif
   else
     call genutils#MarkActiveWindow()
-    execute ":ptjump " . expand("<cword>")
+    execute ":ptag " . expand("<cword>")
     let winnr = genutils#GetPreviewWinnr()
     call genutils#MoveCursorToWindow(winnr)
     norm zt

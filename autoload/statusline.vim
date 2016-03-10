@@ -36,7 +36,7 @@ function! statusline#simple_info()
   setlocal statusline+=%m
 
   "setlocal statusline+=%-18(%02.2c[%02.2B]L%l/%L%)\ "space
-  setlocal statusline+=L%l/%L\ %P\ %02.2c[%02.2B]%y\     "space
+  setlocal statusline+=L%L/%l\ %P\ %02.2c[%02.2B]%y\     "space
 
   "setlocal statusline+=%h%m%r%w                     " status flags
   "setlocal statusline+=\[%{strlen(&ft)?&ft:'none'}] " file type

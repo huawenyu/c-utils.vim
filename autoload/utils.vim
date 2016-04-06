@@ -86,7 +86,7 @@ function! utils#VoomInsert(vsel)
         let number = v:count
     endif
 
-    let perc = line('.') * 100 / line('$')
+    let perc = line('.') * 1000 / line('$')
     if a:vsel
         let temp = @s
         norm! gv"sy

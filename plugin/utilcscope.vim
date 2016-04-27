@@ -75,6 +75,7 @@ if has('cscope')
         if (!empty(db))
             let path = strpart(db, 0, match(db, "/cscope.out$"))
             set nocscopeverbose " suppress 'duplicate connection' error
+            exe "cs reset"
             exe "cs add " . db . " " . path
             set cscopeverbose
         endif
@@ -85,12 +86,17 @@ if has('cscope')
     "nnoremap t <C-]>
     "nnoremap gt <C-W><C-]>
     "nnoremap gT <C-W><C-]><C-W>T
+    "nnoremap <silent> <leader>z :Dispatch echo "Generating tags and cscope database..." &&
+    "    \ find -L . -iname '*.c' -o -iname '*.cpp' -o -iname '*.h' -o -iname '*.hpp' > cscope.files &&
+    "    \ sort cscope.files > cscope.files.sorted && mv cscope.files.sorted cscope.files &&
+    "    \ cscope -kbq -i cscope.files -f cscope.out &&
+    "    \ ctags -R --fields=+aimSl --c-kinds=+lpx --c++-kinds=+lpx --exclude='.svn' 
+    "    \ --exclude='.git' --exclude='*.a' --exclude='*.js' --exclude='*.pxd' --exclude='*.pyx' --exclude='*.so' &&
+    "    \ echo "Done." <cr><cr>
+
     nnoremap <silent> <leader>z :Dispatch echo "Generating tags and cscope database..." &&
-                        \ ctags -R --fields=+aimSl --c-kinds=+lpx --c++-kinds=+lpx --exclude='.svn' 
-                        \ --exclude='.git' --exclude='*.a' --exclude='*.so' && find . -iname '*.c' -o 
-                        \ -iname '*.cpp' -o -iname '*.h' -o -iname '*.hpp' 
-                        \ > cscope.files && cscope -b -i cscope.files -f cscope.out &&
-                        \ echo "Done." <cr><cr>
+        \ gencs.sh -a all &&
+        \ echo "Done." <cr><cr>
 
     "cnoreabbrev csa cs add
     "cnoreabbrev csf cs find

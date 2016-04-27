@@ -17,6 +17,21 @@ function! utilcscope#LoadCscope()
     set cscopeverbose
 endfunction
 
+function! utilcscope#LoadCscope2()
+    if exists('g:loaded_c_utils_utilcscope_have_db')
+        return
+    endif
+
+    let db = findfile("cscope.out", ".;")
+    if (!empty(db))
+        let path = strpart(db, 0, match(db, "/cscope.out$"))
+        set nocscopeverbose " suppress 'duplicate connection' error
+        exe "cs add " . db . " " . path
+        let g:loaded_c_utils_utilcscope_have_db = 1
+        set cscopeverbose
+    endif
+endfunction
+
 " Find symbol and add to quickfix
 function! utilcscope#CscopeSymbol()
   let l:old_cscopeflag = &cscopequickfix

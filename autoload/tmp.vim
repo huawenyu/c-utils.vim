@@ -3,7 +3,7 @@ function! tmp#LocalGrepYankToNewTab()
 endfunction
 
 function! tmp#CurrentReplace()
-    return "%s/\\<" . expand("<cword>") . "\\>/" . expand("<cword>") . "/gi"
+    return "%s/\\<" . expand("<cword>") . "\\>/" . expand("<cword>") . "/gI"
 endfunction
 
 function! tmp#AppendNoteOnSource()

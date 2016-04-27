@@ -39,8 +39,9 @@ autocmd BufEnter * call utilcscope#LoadCscope()
 " http://www.fsl.cs.sunysb.edu/~rick/rick_vimrc
 
 ":help cscope-options
-set cscopetag
-set cscopequickfix=s0,c0,d0,i0,t-,e-
+
+"set cscopetag
+"set cscopequickfix=s0,c0,d0,i0,t-,e-
 
 nmap <leader>ff :cs find f <C-R>=expand("<cfile>")<CR>
 nmap <leader>fs :cs find s <C-R>=expand("<cword>")<CR><CR>
@@ -61,6 +62,48 @@ nmap <leader>] :cs find g <C-R>=expand("<cword>")<CR><CR>
 command! -nargs=* FindFunc call utilcscope#_Function("function", <f-args>)
 command! -nargs=* FindVar call utilcscope#_Function("variable", <f-args>)
 
+
+if has('cscope')
+    set cscopetagorder=0
+    set cscopetag
+    set cscopeverbose
+    set cscopequickfix=s-,c-,d-,i-,t-,e-
+    set cscopepathcomp=3
+
+    function! LoadCscope()
+        let db = findfile("cscope.out", ".;")
+        if (!empty(db))
+            let path = strpart(db, 0, match(db, "/cscope.out$"))
+            set nocscopeverbose " suppress 'duplicate connection' error
+            exe "cs add " . db . " " . path
+            set cscopeverbose
+        endif
+    endfunction
+    au BufEnter /* call LoadCscope()
+
+    "nnoremap T :cs find c <C-R>=expand("<cword>")<CR><CR>
+    "nnoremap t <C-]>
+    "nnoremap gt <C-W><C-]>
+    "nnoremap gT <C-W><C-]><C-W>T
+    nnoremap <silent> <leader>z :Dispatch echo "Generating tags and cscope database..." &&
+                        \ ctags -R --fields=+aimSl --c-kinds=+lpx --c++-kinds=+lpx --exclude='.svn' 
+                        \ --exclude='.git' --exclude='*.a' --exclude='*.so' && find . -iname '*.c' -o 
+                        \ -iname '*.cpp' -o -iname '*.h' -o -iname '*.hpp' 
+                        \ > cscope.files && cscope -b -i cscope.files -f cscope.out &&
+                        \ echo "Done." <cr><cr>
+
+    "cnoreabbrev csa cs add
+    "cnoreabbrev csf cs find
+    "cnoreabbrev csk cs kill
+    "cnoreabbrev csr cs reset
+    "cnoreabbrev css cs show
+    "cnoreabbrev csh cs help
+    "cnoreabbrev csc Cscope
+    command! Cscope :call LoadCscope()
+endif
+
+
 "nmap <F11> :!find . -iname '*.c' -o -iname '*.cpp' -o -iname '*.h' -o -iname '*.hpp' > cscope.files<CR>
 "    \:!cscope -b -i cscope.files -f cscope.out<CR>
 "    \:cs reset<CR>
+

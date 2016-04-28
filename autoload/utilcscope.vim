@@ -19,6 +19,7 @@ endfunction
 
 function! utilcscope#LoadCscope2()
     if exists('g:loaded_c_utils_utilcscope_have_db')
+        exe "cs reset"
         return
     endif
 

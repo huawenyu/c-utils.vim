@@ -1,6 +1,7 @@
 function! utilcscope#LoadCscope()
     if exists('g:loaded_c_utils_utilcscope_have_db')
-        exe ":silent! cs reset"
+        exe "silent! cs reset"
+        exe "redraw"
         return
     endif
 
@@ -20,7 +21,8 @@ endfunction
 
 function! utilcscope#LoadCscope2()
     if exists('g:loaded_c_utils_utilcscope_have_db')
-        exe ":silent! cs reset"
+        exe "silent! cs reset"
+        exe "redraw"
         return
     endif
 

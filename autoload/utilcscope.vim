@@ -1,6 +1,6 @@
 function! utilcscope#LoadCscope()
     if exists('g:loaded_c_utils_utilcscope_have_db')
-        exe ":silent !cs reset"
+        exe ":silent! cs reset"
         return
     endif
 
@@ -20,7 +20,7 @@ endfunction
 
 function! utilcscope#LoadCscope2()
     if exists('g:loaded_c_utils_utilcscope_have_db')
-        exe ":silent !cs reset"
+        exe ":silent! cs reset"
         return
     endif
 
@@ -42,7 +42,7 @@ function! utilcscope#CscopeSymbol()
 
   set cscopequickfix=s-,c0,d0,i0,t-,e-
   exec ':cs find s ' . expand("<cword>")
-  "exec ':silent !copen'
+  "exec ':silent! copen'
   "exec "normal \<C-W>k"
 
   "call setpos('.', save_cursor)

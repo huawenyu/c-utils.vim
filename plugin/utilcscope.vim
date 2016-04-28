@@ -87,6 +87,7 @@ if has('cscope')
     "nnoremap t <C-]>
     "nnoremap gt <C-W><C-]>
     "nnoremap gT <C-W><C-]><C-W>T
+
     "nnoremap <silent> <leader>z :Dispatch echo "Generating tags and cscope database..." &&
     "    \ find -L . -iname '*.c' -o -iname '*.cpp' -o -iname '*.h' -o -iname '*.hpp' > cscope.files &&
     "    \ sort cscope.files > cscope.files.sorted && mv cscope.files.sorted cscope.files &&

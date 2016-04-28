@@ -67,7 +67,8 @@ if has('cscope')
     set cscopetagorder=0
     set cscopetag
     set cscopeverbose
-    set cscopequickfix=s-,c-,d-,i-,t-,e-
+    "set cscopequickfix=s-,c-,d-,i-,t-,e-
+    set cscopequickfix=s0,c0,d0,i0,t-,e-
     set cscopepathcomp=3
 
     function! LoadCscope()
@@ -80,7 +81,7 @@ if has('cscope')
             set cscopeverbose
         endif
     endfunction
-    au BufEnter /* call LoadCscope()
+    au BufEnter /* call utilcscope#LoadCscope2()
 
     "nnoremap T :cs find c <C-R>=expand("<cword>")<CR><CR>
     "nnoremap t <C-]>
@@ -105,7 +106,7 @@ if has('cscope')
     "cnoreabbrev css cs show
     "cnoreabbrev csh cs help
     "cnoreabbrev csc Cscope
-    command! Cscope :call LoadCscope()
+    command! Cscope :call utilcscope#LoadCscope2()
 endif
 
 

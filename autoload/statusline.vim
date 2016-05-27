@@ -27,7 +27,7 @@ endfunction
 function! statusline#simple_info()
   set laststatus=2                             " always show statusbar
 
-  setlocal statusline=[%{StatlineBufCount()}:%n]\   "space
+  setlocal statusline=[%n]\   "space
   setlocal statusline+=%{statusline#GetFuncName()}\  " space
   setlocal statusline+=\ :%f
 

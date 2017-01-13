@@ -98,9 +98,11 @@ if has('cscope')
     "    \ --exclude='.git' --exclude='*.a' --exclude='*.js' --exclude='*.pxd' --exclude='*.pyx' --exclude='*.so' &&
     "    \ echo "Done." <cr><cr>
 
-    nnoremap <silent> <leader>z :Dispatch echo "Generating tags and cscope database..." &&
-        \ gencs.sh -a all &&
-        \ echo "Done." <cr><cr>
+    "nnoremap <silent> <leader>z :AsyncRun echo "Generating tags and cscope database..." &&
+    "    \ AsyncRun gencs.sh -a all &&
+    "    \ AsyncRun echo "Done." <cr><cr>
+
+    nnoremap <silent> <leader>z :copen<CR>:AsyncRun gencs.sh -a all<CR>:Cscope<CR>
 
     "cnoreabbrev csa cs add
     "cnoreabbrev csf cs find

@@ -56,6 +56,28 @@ function! utils#ColumnlineOrDeclaration()
     endif
   else
     call genutils#MarkActiveWindow()
+
+    let l:act_nr = winnr()
+    let l:have_preview = 0
+    let t:x=[]
+    windo call add(t:x, winnr())
+    for i in t:x
+      exec i.'wincmd w'
+      if &l:previewwindow
+        let l:have_preview = 1
+      endif
+    endfor
+
+    call genutils#RestoreActiveWindow()
+    if l:have_preview
+    else
+      wincmd l " Move right side.
+      let l:preview_nr = winnr()
+      if l:preview_nr != l:act_nr
+        let &l:previewwindow = 1
+      endif
+    endif
+
     execute ":ptag " . expand("<cword>")
     let winnr = genutils#GetPreviewWinnr()
     call genutils#MoveCursorToWindow(winnr)

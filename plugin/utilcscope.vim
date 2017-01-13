@@ -67,6 +67,7 @@ command! -nargs=* FindVar call utilcscope#_Function("variable", <f-args>)
 if has('cscope')
     set cscopetagorder=0
     set cscopetag
+    set cscoperelative
     set cscopeverbose
     "set cscopequickfix=s-,c-,d-,i-,t-,e-
     set cscopequickfix=s0,c0,d0,i0,t-,e-

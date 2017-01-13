@@ -2,7 +2,7 @@
 function! utilgrep#Grep(add, sel, ...)
   execute "norm mP"
 
-  let l:cmd = "Grep"
+  let l:cmd = "GrepperAg"
   let l:param = ""
 
   if a:add == 0

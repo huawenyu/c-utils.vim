@@ -1,5 +1,5 @@
 # tracelog.vim
-use vim adding trace log to the source code
+use vim adding trace log to the source code.
 
 # QuickStart
 Assume we now locate our source top dir.

@@ -9,7 +9,7 @@ function! utils#IsLeftMostWindow()
 endfunction
 
 " Refresh files
-function utils#RefreshWindows()
+function! utils#RefreshWindows()
   call genutils#MarkActiveWindow()
   let act_tabnr = tabpagenr()
   let counts = 0
@@ -78,7 +78,7 @@ function! utils#ColumnlineOrDeclaration()
       endif
     endif
 
-    execute ":ptag " . expand("<cword>")
+    silent! execute ":ptag " . expand("<cword>")
     let winnr = genutils#GetPreviewWinnr()
     call genutils#MoveCursorToWindow(winnr)
     norm zt
@@ -170,6 +170,6 @@ function! utils#GetSelected(fname)
   endif
 endfunction
 
-function utils#AppendToFile(file, lines)
+function! utils#AppendToFile(file, lines)
   call writefile(a:lines, a:file, "a")
 endfunction

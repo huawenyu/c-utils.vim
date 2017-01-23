@@ -102,7 +102,7 @@ if has('cscope')
     "    \ AsyncRun gencs.sh -a all &&
     "    \ AsyncRun echo "Done." <cr><cr>
 
-    nnoremap <silent> <leader>z :copen<CR>:AsyncRun gencs.sh -a all<CR>:Cscope<CR>
+    "nnoremap <silent> <leader>z :copen<CR>:AsyncRun gencs.sh -a all<CR>:Cscope<CR>
 
     "cnoreabbrev csa cs add
     "cnoreabbrev csf cs find

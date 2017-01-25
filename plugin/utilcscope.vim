@@ -98,12 +98,6 @@ if has('cscope')
     "    \ --exclude='.git' --exclude='*.a' --exclude='*.js' --exclude='*.pxd' --exclude='*.pyx' --exclude='*.so' &&
     "    \ echo "Done." <cr><cr>
 
-    "nnoremap <silent> <leader>z :AsyncRun echo "Generating tags and cscope database..." &&
-    "    \ AsyncRun gencs.sh -a all &&
-    "    \ AsyncRun echo "Done." <cr><cr>
-
-    "nnoremap <silent> <leader>z :copen<CR>:AsyncRun gencs.sh -a all<CR>:Cscope<CR>
-
     "cnoreabbrev csa cs add
     "cnoreabbrev csf cs find
     "cnoreabbrev csk cs kill
@@ -113,9 +107,3 @@ if has('cscope')
     "cnoreabbrev csc Cscope
     command! Cscope :call utilcscope#LoadCscope2()
 endif
-
-
-"nmap <F11> :!find . -iname '*.c' -o -iname '*.cpp' -o -iname '*.h' -o -iname '*.hpp' > cscope.files<CR>
-"    \:!cscope -b -i cscope.files -f cscope.out<CR>
-"    \:cs reset<CR>
-

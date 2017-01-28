@@ -43,8 +43,11 @@ autocmd BufEnter * call utilcscope#LoadCscope()
 "set cscopetag
 "set cscopequickfix=s0,c0,d0,i0,t-,e-
 
-nmap <leader>ff :cs find f <C-R>=expand("<cfile>")<CR>
-nmap <leader>fw :cs find f <C-R>=expand("<cword>")<CR>
+
+nmap <leader>ff :FzyLsAg<CR>
+nmap <leader>fj :FzyTag<CR>
+"nmap <leader>ff :cs find f <C-R>=expand("<cfile>")<CR>
+"nmap <leader>fw :cs find f <C-R>=expand("<cword>")<CR>
 nmap <leader>fs :cs find s <C-R>=expand("<cword>")<CR><CR>
 nmap <leader>fg :cs find g <C-R>=expand("<cword>")<CR><CR>
 nmap <leader>fc :cs find c <C-R>=expand("<cword>")<CR><CR>
@@ -53,7 +56,7 @@ nmap <leader>fd :cs find d <C-R>=expand("<cword>")<CR><CR>
 "nmap <leader>fe :cs find e <C-R>=expand("<cword>")<CR>
 "nmap <leader>fi :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
 nmap <leader>fe :call utilcscope#CscopeSymbol() <CR>
-nmap <leader>fi :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+"nmap <leader>fi :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
 nmap <leader>ft :<C-\>e utilcscope#FindFunc(0) <CR>
 vmap <leader>ft :<C-\>e utilcscope#FindFunc(1) <CR>
 "nmap <leader>fe :<C-\>e utilcscope#FindVar(0) <CR>

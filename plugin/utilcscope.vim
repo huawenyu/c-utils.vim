@@ -44,9 +44,7 @@ autocmd BufEnter * call utilcscope#LoadCscope()
 "set cscopequickfix=s0,c0,d0,i0,t-,e-
 
 
-nmap <leader>ff :FzyLsAg<CR>
-nmap <leader>fj :FzyTag<CR>
-"nmap <leader>ff :cs find f <C-R>=expand("<cfile>")<CR>
+nmap <leader>ff :cs find f <C-R>=expand("<cfile>")<CR>
 "nmap <leader>fw :cs find f <C-R>=expand("<cword>")<CR>
 nmap <leader>fs :cs find s <C-R>=expand("<cword>")<CR><CR>
 nmap <leader>fg :cs find g <C-R>=expand("<cword>")<CR><CR>

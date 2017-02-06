@@ -19,7 +19,8 @@ let g:loaded_c_utils_utilcscope = 1
 
 "nvim should load cscope db by script
 "set tags=tags;/
-set tags=./tagx,tagx,./.tagx,.tagx;./tags,tags,./.tags,.tags;$HOME
+"set tags=./tagx,tagx,./.tagx,.tagx,./tags,tags,./.tags,.tags;$HOME
+set tags=./tags,tags,./.tags,.tags;$HOME
 
 autocmd BufEnter * call utilcscope#LoadCscope()
 "autocmd BufNewFile,BufRead * call utilcscope#LoadCscope()

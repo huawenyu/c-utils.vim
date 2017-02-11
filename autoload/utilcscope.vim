@@ -9,12 +9,12 @@ function! utilcscope#LoadCscope()
     let db = findfile("cscope.out", ".;")
     set nocscopeverbose " suppress 'duplicate connection' error
     if filereadable("cscope.out")
-      exe "cs add cscope.out"
-      let g:loaded_c_utils_utilcscope_have_db = 1
+        exe "cs add cscope.out"
+        let g:loaded_c_utils_utilcscope_have_db = 1
     elseif (!empty(db))
-      let path = strpart(db, 0, match(db, "/cscope.out$"))
-      exe "cs add " . db . " " . path
-      let g:loaded_c_utils_utilcscope_have_db = 1
+        let path = strpart(db, 0, match(db, "/cscope.out$"))
+        exe "cs add " . db . " " . path
+        let g:loaded_c_utils_utilcscope_have_db = 1
     endif
     set cscopeverbose
 endfunction
@@ -36,56 +36,56 @@ function! utilcscope#LoadCscope2()
     endif
 endfunction
 
-" Find symbol and add to quickfix
-function! utilcscope#CscopeSymbol()
-  let l:old_cscopeflag = &cscopequickfix
-  "let save_cursor = getpos(".")
-  exec "normal mP"
+" list symbol
+function! utilcscope#Symbol()
+    let l:old_cscopeflag = &cscopequickfix
+    set cscopequickfix=s-,c0,d0,i0,t-,e-
 
-  set cscopequickfix=s-,c0,d0,i0,t-,e-
-  exec ':cs find s ' . expand("<cword>")
-  "exec ':silent! copen'
-  "exec "normal \<C-W>k"
+    exec ':cs find s ' . expand("<cword>")
+    let w_qf = genutils#GetQuickfixWinnr()
+    if w_qf == 0
+        call genutils#MarkActiveWindow()
+        copen
+        call genutils#RestoreActiveWindow()
+    endif
 
-  "call setpos('.', save_cursor)
-  exec "normal `P"
-  let &cscopequickfix = l:old_cscopeflag
+    let &cscopequickfix = l:old_cscopeflag
 endfunction
 
 function! utilcscope#FindFunc(sel)
-  if a:sel
-    return "FindFunc ".utils#GetSelected("")." "
-  else
-    return "FindFunc ".expand('<cword>')." "
-  endif
+    if a:sel
+        return "FindFunc ".utils#GetSelected("")." "
+    else
+        return "FindFunc ".expand('<cword>')." "
+    endif
 endfunction
 
 function! utilcscope#FindVar(sel)
-  if a:sel
-    return "FindVar ".utils#GetSelected("")." "
-  else
-    return "FindVar ".expand('<cword>')." "
-  endif
+    if a:sel
+        return "FindVar ".utils#GetSelected("")." "
+    else
+        return "FindVar ".expand('<cword>')." "
+    endif
 endfunction
 
 function! utilcscope#_Function(type, sname, ...)
-  Decho "utilcscope#_Function a:0=" . a:0
+    Decho "utilcscope#_Function a:0=" . a:0
 
-  if a:0 > 0
-    let cmd_str = ":silent !taglist.awk ".a:type." ".a:sname." ".a:1
-  else
-    let cmd_str = ":silent !taglist.awk ".a:type." ".a:sname
-  endif
-
-  Decho cmd_str
-  execute cmd_str
-
-  execute ':redraw!'
-  if filereadable('/tmp/vim.taglist')
-    let lines = readfile('/tmp/vim.taglist')
-    if !empty(lines)
-      execute ':cgetfile /tmp/vim.taglist'
+    if a:0 > 0
+        let cmd_str = ":silent !taglist.awk ".a:type." ".a:sname." ".a:1
+    else
+        let cmd_str = ":silent !taglist.awk ".a:type." ".a:sname
     endif
-  endif
+
+    Decho cmd_str
+    execute cmd_str
+
+    execute ':redraw!'
+    if filereadable('/tmp/vim.taglist')
+        let lines = readfile('/tmp/vim.taglist')
+        if !empty(lines)
+            execute ':cgetfile /tmp/vim.taglist'
+        endif
+    endif
 endfunction
 

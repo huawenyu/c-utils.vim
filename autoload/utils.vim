@@ -71,6 +71,7 @@ function! utils#Declaration()
         endif
     endfor
 
+    call genutils#RestoreActiveWindow()
     if !l:have_preview
         wincmd l " Move right side.
         let l:preview_nr = winnr()

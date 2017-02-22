@@ -71,8 +71,9 @@ function! utils#Declaration()
         endif
     endfor
 
-    call genutils#RestoreActiveWindow()
     if !l:have_preview
+        call genutils#RestoreActiveWindow()
+
         wincmd l " Move right side.
         let l:preview_nr = winnr()
         if l:preview_nr != l:act_nr
@@ -80,11 +81,25 @@ function! utils#Declaration()
         endif
     endif
 
-    call genutils#RestoreActiveWindow()
-    execute ":ptag " . expand("<cword>")
+    let oline = 0
     let winnr = genutils#GetPreviewWinnr()
-    call genutils#MoveCursorToWindow(winnr)
-    "norm zt
+    if winnr > 0
+        call genutils#MoveCursorToWindow(winnr)
+        let oline = line('.')
+    endif
+
+    call genutils#RestoreActiveWindow()
+    execute ":ptag! " . expand("<cword>")
+
+    let winnr = genutils#GetPreviewWinnr()
+    if winnr > 0
+        call genutils#MoveCursorToWindow(winnr)
+        let cline = line('.')
+        if cline != oline
+            norm zt
+        endif
+    endif
+
     call genutils#RestoreActiveWindow()
 endfunction
 

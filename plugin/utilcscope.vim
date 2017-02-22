@@ -55,7 +55,7 @@ nmap <leader>ft :call utilcscope#Symbol() <CR>
 
 if has('cscope')
     set cscopetagorder=0
-    set cscopetag
+    "set cscopetag
     set cscoperelative
     set cscopeverbose
     "set cscopequickfix=s-,c-,d-,i-,t-,e-

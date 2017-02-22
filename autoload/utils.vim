@@ -84,7 +84,7 @@ function! utils#Declaration()
     execute ":ptag " . expand("<cword>")
     let winnr = genutils#GetPreviewWinnr()
     call genutils#MoveCursorToWindow(winnr)
-    norm zt
+    "norm zt
     call genutils#RestoreActiveWindow()
 endfunction
 

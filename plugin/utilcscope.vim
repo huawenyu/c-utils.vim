@@ -37,6 +37,7 @@ autocmd BufEnter * call utilcscope#LoadCscope()
 
 ":help cscope-options
 
+" Diable cscopetag, using tags for auto-tag quickly.
 "set cscopetag
 "set cscopequickfix=s0,c0,d0,i0,t-,e-
 

@@ -89,7 +89,7 @@ function! utils#Declaration()
     endif
 
     call genutils#RestoreActiveWindow()
-    execute ":ptag! " . expand("<cword>")
+    execute ":ptag " . expand("<cword>")
 
     let winnr = genutils#GetPreviewWinnr()
     if winnr > 0

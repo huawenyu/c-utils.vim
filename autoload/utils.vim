@@ -142,7 +142,7 @@ function! utils#VoomInsert(vsel)
     call cursor(line('.'), len - 3)
 endfunction
 
-function! utils#GotoFileWithLineNum()
+function! utils#GetFileFrmCursor()
     " filename under the cursor
     let file_name = expand('<cfile>')
     if !strlen(file_name)
@@ -151,6 +151,7 @@ function! utils#GotoFileWithLineNum()
     endif
 
     " look for a line number separated by a :
+    let line_number = 0
     if search('\%#\f*:\zs[0-9]\+')
         " change the 'iskeyword' option temporarily to pick up just numbers
         let temp = &iskeyword
@@ -159,18 +160,21 @@ function! utils#GotoFileWithLineNum()
         exe 'set iskeyword=' . temp
     endif
 
-    " edit the file
-    exe 'e '.file_name
+    return [file_name, line_number]
+endfunction
 
-    " if there is a line number, go to it
-    if exists('line_number')
-        exe line_number
+function! utils#GotoFileWithLineNum()
+    let file_info = utils#GetFileFrmCursor()
+    exe 'e '.file_info[0]
+    if file_info[1]
+        exe file_info[1]
     endif
 endfunction
 
 " open file in previewwindow
 function! utils#GotoFileWithPreview()
     call genutils#MarkActiveWindow()
+    let file_info = utils#GetFileFrmCursor()
 
     let l:act_nr = winnr()
     let l:have_preview = 0
@@ -201,7 +205,10 @@ function! utils#GotoFileWithPreview()
     let winnr = genutils#GetPreviewWinnr()
     if winnr > 0
         call genutils#MoveCursorToWindow(winnr)
-        call utils#GotoFileWithLineNum()
+        exe 'e '.file_info[0]
+        if file_info[1]
+            exe file_info[1]
+        endif
     endif
 
     call genutils#RestoreActiveWindow()

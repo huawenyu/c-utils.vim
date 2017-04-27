@@ -168,6 +168,45 @@ function! utils#GotoFileWithLineNum()
     endif
 endfunction
 
+" open file in previewwindow
+function! utils#GotoFileWithPreview()
+    call genutils#MarkActiveWindow()
+
+    let l:act_nr = winnr()
+    let l:have_preview = 0
+    let t:x=[]
+    windo call add(t:x, winnr())
+    for i in t:x
+        if getwinvar(i, '&previewwindow')
+            let l:have_preview = 1
+            break
+        endif
+    endfor
+
+    if !l:have_preview
+        call genutils#RestoreActiveWindow()
+
+        wincmd l " Move right side.
+        let l:preview_nr = winnr()
+        if l:preview_nr != l:act_nr
+            let &l:previewwindow = 1
+        endif
+    endif
+
+    let winnr = genutils#GetPreviewWinnr()
+    if winnr > 0
+        call genutils#MoveCursorToWindow(winnr)
+    endif
+
+    let winnr = genutils#GetPreviewWinnr()
+    if winnr > 0
+        call genutils#MoveCursorToWindow(winnr)
+        call utils#GotoFileWithLineNum()
+    endif
+
+    call genutils#RestoreActiveWindow()
+endfunction
+
 function! utils#GetSelected(fname)
     " Why is this not a built-in Vim script function?!
     let [lnum1, col1] = getpos("'<")[1:2]

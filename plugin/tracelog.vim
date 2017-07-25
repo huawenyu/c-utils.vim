@@ -22,7 +22,7 @@ endif
 if !exists('g:tracelog_default_dir')
     echom 'Please define trace config dir:'
     echom '    let g:tracelog_default_dir = $HOME . "/script/trace-wad/"'
-    echom 'And the dir have files "files, func-add, func-comment, macro-def, macro-imp" '
+    echom 'And the dir have files "logclear" '
     finish
 endif
 
@@ -30,8 +30,6 @@ let g:loaded_tracelog = 1
 "}
 
 "Misc {
-command! -nargs=0 TraceAdd call tracelog#TraceAdd()
-command! -nargs=0 TraceAdjust call tracelog#TraceAdjust()
-command! -nargs=0 TraceClear call tracelog#TraceClear()
+command! -nargs=0 TraceOutline call tracelog#TraceOutline()
 command! -nargs=0 TraceLogClear call tracelog#TraceLogClear()
 "}

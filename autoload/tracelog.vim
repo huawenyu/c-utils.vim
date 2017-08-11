@@ -14,7 +14,9 @@ endfun
 
 fun! s:TraceOutline()
     exec ":silent g/] Received request from client: /norm A {{{1}}}"
-    exec ":silent g/ Forward response from cache:/norm A {{{2}}}"
+    exec ":silent g/] Forward request to server:/norm A {{{2}}}"
+    exec ":silent g/] Received response from server:/norm A {{{1}}}"
+    exec ":silent g/] Forward response from cache:/norm A {{{2}}}"
     exec ":silent g/] Forward response from server:/norm A {{{2}}}"
 endfun
 

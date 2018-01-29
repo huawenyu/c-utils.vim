@@ -53,5 +53,4 @@ endfunction
 " /*}}}*/
 
 "autocmd
-autocmd WinEnter * if !utils#IsLeftMostWindow() | let g:tagbar_left = 0 | else | let g:tagbar_left = 1 | endif
 command! -nargs=0 Tracecrash call utils#Tracecrash()

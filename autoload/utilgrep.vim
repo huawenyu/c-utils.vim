@@ -23,7 +23,7 @@ function! utilgrep#Grep(add, sel, ...)
   if !empty(search_str)
     let search_str = input("Search? ", search_str)
     if exists("a:000")
-      return l:cmd .' '. l:param . " -- ".shellescape(search_str,1)." ".join(a:000, " ")." daemon/wad"
+      return l:cmd .' '. l:param . " -- ".shellescape(search_str,1)." ".join(a:000, " ")."daemon/wad"
     else
       return l:cmd .' '. l:param . " -- ".shellescape(search_str,1)." "
     endif

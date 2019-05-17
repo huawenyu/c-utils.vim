@@ -1,9 +1,11 @@
 " autocmd QuickfixCmdPost make,grep,vimgrep copen
+" @add 0 append-mode, 1 new-mode, 2 have special dir 'wad' mode
 function! utilgrep#Grep(add, sel, ...)
-  execute "norm mP"
+  execute 'norm mP'
 
   let l:cmd = "GrepperAg"
   let l:param = ""
+  let l:boundry = " -- "
 
   if a:add == 0
     let l:cmd = "GrepAdd"
@@ -18,14 +20,15 @@ function! utilgrep#Grep(add, sel, ...)
     endif
   else
     let search_str = expand('<cword>')
+    let l:boundry = " -w "
   endif
 
   if !empty(search_str)
     let search_str = input("Search? ", search_str)
-    if exists("a:000")
-      return l:cmd .' '. l:param . " -- ".shellescape(search_str,1)." ".join(a:000, " ")."daemon/wad"
+    if exists("a:000") && a:add == 2
+      return l:cmd .' '. l:param . l:boundry . shellescape(search_str,1)." ".join(a:000, " ")."daemon/wad"
     else
-      return l:cmd .' '. l:param . " -- ".shellescape(search_str,1)." "
+      return l:cmd .' '. l:param . l:boundry . shellescape(search_str,1)." "
     endif
   endif
 endfunction

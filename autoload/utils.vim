@@ -62,11 +62,15 @@ function! utils#Declaration()
 
     let l:act_nr = winnr()
     let l:have_preview = 0
+    let l:is_preview_self = 0
     let t:x=[]
     windo call add(t:x, winnr())
     for i in t:x
         if getwinvar(i, '&previewwindow')
             let l:have_preview = 1
+            if i == l:act_nr
+                let l:is_preview_self = i
+            endif
             break
         endif
     endfor
@@ -81,23 +85,34 @@ function! utils#Declaration()
         endif
     endif
 
-    let oline = 0
-    let winnr = genutils#GetPreviewWinnr()
-    if winnr > 0
-        call genutils#MoveCursorToWindow(winnr)
-        let oline = line('.')
-    endif
-
-    call genutils#RestoreActiveWindow()
-    execute ":silent! ptag " . expand("<cword>")
-
-    let winnr = genutils#GetPreviewWinnr()
-    if winnr > 0
-        call genutils#MoveCursorToWindow(winnr)
-        let cline = line('.')
-        if cline != oline
-            norm zt
+    if !l:is_preview_self
+        let oline = 0
+        let winnr = genutils#GetPreviewWinnr()
+        if winnr > 0
+            call genutils#MoveCursorToWindow(winnr)
+            let oline = line('.')
         endif
+
+        call genutils#RestoreActiveWindow()
+        execute ":silent! ptag " . expand("<cword>")
+
+        let winnr = genutils#GetPreviewWinnr()
+        if winnr > 0
+            call genutils#MoveCursorToWindow(winnr)
+            let cline = line('.')
+            if cline != oline
+                norm zt
+            endif
+        endif
+"    else
+"        call genutils#RestoreActiveWindow()
+"
+"        wincmd l " Move right side.
+"        let l:curr = winnr()
+"        if l:curr != l:is_preview_self
+"            execute ":silent! cs f g " . expand("<cword>")
+"            norm zt
+"        endif
     endif
 
     call genutils#RestoreActiveWindow()

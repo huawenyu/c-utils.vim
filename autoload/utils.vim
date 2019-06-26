@@ -57,17 +57,33 @@ function! utils#Columnline()
 endfunction
 
 
+" Don't use previewwindow/ptag, it'll auto close when <Esc>
+" - if previewwindow existed and current window is not previewer, show declare in it.
+" -                              current window is itself, try to find right-window
+"                                                          found and show in it.
+"                                                          not found, show in current-window (also previewwindow)
+" - if previewwindow not existed, try to find right-window
+"                               found and show in it.
+"                               not found, using ptag
+" - If tag existed (the show window content changed), please move the line on the top of the window
 function! utils#Declaration()
     call genutils#MarkActiveWindow()
 
+    let l:strcmd_tag = ":silent! tag " . expand("<cword>")
+    let l:strcmd_ptag = ":silent! ptag " . expand("<cword>")
+    let l:strcmd = l:strcmd_tag
+
     let l:act_nr = winnr()
-    let l:have_preview = 0
+    let l:preview_nr = 0
+    let l:tag_nr = 0
     let l:is_preview_self = 0
     let t:x=[]
     windo call add(t:x, winnr())
     for i in t:x
         if getwinvar(i, '&previewwindow')
-            let l:have_preview = 1
+            let l:preview_nr = i
+            let l:tag_nr = i
+            let l:strcmd = l:strcmd_ptag
             if i == l:act_nr
                 let l:is_preview_self = i
             endif
@@ -75,27 +91,37 @@ function! utils#Declaration()
         endif
     endfor
 
-    if !l:have_preview
+    let oline = 0
+    if !l:preview_nr || l:is_preview_self
         call genutils#RestoreActiveWindow()
 
-        wincmd l " Move right side.
-        let l:preview_nr = winnr()
-        if l:preview_nr != l:act_nr
-            let &l:previewwindow = 1
-        endif
-    endif
+        " Move right window.
+        wincmd l
+        let oline = line('.')
 
-    if !l:is_preview_self
-        let oline = 0
+        let l:tag_nr = winnr()
+        if l:tag_nr == l:act_nr
+            let l:strcmd = l:strcmd_ptag
+            execute l:strcmd
+        else
+            execute l:strcmd
+            let cline = line('.')
+            if cline != oline
+                norm zt
+            endif
+        endif
+    else
         let winnr = genutils#GetPreviewWinnr()
         if winnr > 0
             call genutils#MoveCursorToWindow(winnr)
             let oline = line('.')
         endif
 
-        call genutils#RestoreActiveWindow()
-        execute ":silent! ptag " . expand("<cword>")
+        let l:strcmd = l:strcmd_ptag
+        execute l:strcmd
+    endif
 
+    if l:strcmd == l:strcmd_ptag
         let winnr = genutils#GetPreviewWinnr()
         if winnr > 0
             call genutils#MoveCursorToWindow(winnr)
@@ -104,15 +130,6 @@ function! utils#Declaration()
                 norm zt
             endif
         endif
-"    else
-"        call genutils#RestoreActiveWindow()
-"
-"        wincmd l " Move right side.
-"        let l:curr = winnr()
-"        if l:curr != l:is_preview_self
-"            execute ":silent! cs f g " . expand("<cword>")
-"            norm zt
-"        endif
     endif
 
     call genutils#RestoreActiveWindow()

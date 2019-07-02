@@ -3,7 +3,7 @@
 function! utilgrep#Grep(add, sel, ...)
   execute 'norm mP'
 
-  let l:cmd = "GrepperAg"
+  let l:cmd = "GrepperRg"
   let l:param = ""
   let l:boundry = " -- "
 

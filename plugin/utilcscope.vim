@@ -41,14 +41,18 @@ autocmd BufEnter * call utilcscope#LoadCscope()
 "set cscopetag
 "set cscopequickfix=s0,c0,d0,i0,t-,e-
 
-"nmap <leader>] :cs find g <C-R>=expand("<cword>")<CR><CR>
-nmap <leader>ff :cs find f <C-R>=expand("<cfile>")<CR>
-nmap <leader>fs :cs find s <C-R>=expand("<cword>")<CR><CR>
-nmap <leader>fg :cs find g <C-R>=expand("<cword>")<CR><CR>
-nmap <leader>fc :cs find c <C-R>=expand("<cword>")<CR><CR>
-nmap <leader>fd :cs find d <C-R>=expand("<cword>")<CR><CR>
-nmap <leader>fe :cs find e <C-R>=expand("<cword>")<CR>
-nmap <leader>ft :call utilcscope#Symbol() <CR>
+if exists("g:cutils_cscope_map")
+    if g:cutils_cscope_map
+        "nmap <leader>] :cs find g <C-R>=expand("<cword>")<CR><CR>
+        nmap <leader>ff :cs find f <C-R>=expand("<cfile>")<CR>
+        nmap <leader>fs :cs find s <C-R>=expand("<cword>")<CR><CR>
+        nmap <leader>fg :cs find g <C-R>=expand("<cword>")<CR><CR>
+        nmap <leader>fc :cs find c <C-R>=expand("<cword>")<CR><CR>
+        nmap <leader>fd :cs find d <C-R>=expand("<cword>")<CR><CR>
+        nmap <leader>fe :cs find e <C-R>=expand("<cword>")<CR>
+        nmap <leader>ft :call utilcscope#Symbol() <CR>
+    endif
+endif
 
 if has('cscope')
     set cscopetagorder=0

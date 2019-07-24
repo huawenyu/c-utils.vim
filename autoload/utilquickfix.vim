@@ -52,6 +52,7 @@ function! utilquickfix#QuickFixFilter()
 endfunction
 
 function! utilquickfix#QuickFixFunction()
+  call genutils#MarkActiveWindow()
   let list = getqflist()
   if empty(list)
     return
@@ -104,7 +105,7 @@ function! utilquickfix#QuickFixFunction()
 
   "let w:quickfix_title = len(new_list)
   call setqflist(new_list, 'r')
-  execute "norm `P"
+  call genutils#RestoreActiveWindow()
 endfunction
 
 function! utilquickfix#Complete(A, L, P)

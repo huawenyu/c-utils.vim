@@ -210,11 +210,13 @@ function! utils#GotoFileWithPreview()
 
     let l:act_nr = winnr()
     let l:have_preview = 0
+    let l:preview_nr = 0
     let t:x=[]
     windo call add(t:x, winnr())
     for i in t:x
         if getwinvar(i, '&previewwindow')
             let l:have_preview = 1
+            let l:preview_nr = i
             break
         endif
     endfor
@@ -224,22 +226,26 @@ function! utils#GotoFileWithPreview()
 
         wincmd l " Move right side.
         let l:preview_nr = winnr()
-        if l:preview_nr != l:act_nr
-            let &l:previewwindow = 1
-        endif
+
+        "if l:preview_nr != l:act_nr
+        "    let &l:previewwindow = 1
+        "endif
     endif
 
-    let winnr = genutils#GetPreviewWinnr()
-    if winnr > 0
-        call genutils#MoveCursorToWindow(winnr)
-    endif
-
-    let winnr = genutils#GetPreviewWinnr()
-    if winnr > 0
-        call genutils#MoveCursorToWindow(winnr)
+    if l:preview_nr > 0
+        call genutils#MoveCursorToWindow(l:preview_nr)
         exe 'e '.file_info[0]
         if file_info[1]
             exe file_info[1]
+        endif
+    else
+        let winnr = genutils#GetPreviewWinnr()
+        if winnr > 0
+            call genutils#MoveCursorToWindow(winnr)
+            exe 'e '.file_info[0]
+            if file_info[1]
+                exe file_info[1]
+            endif
         endif
     endif
 

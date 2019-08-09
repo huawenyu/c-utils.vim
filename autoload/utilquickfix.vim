@@ -84,6 +84,8 @@ function! utilquickfix#QuickFixFunction()
       let new_list[i].filename = fnamemodify(new_list[i].filename, ':p:.')
     endif
 
+    let new_list[i].module = pathshorten(new_list[i].filename)
+
     let text = substitute(new_list[i].text, '^\s*\(.\{-}\)\s*$', '\1', '')
     let text = substitute(text, '^\t*\(.\{-}\)\t*$', '\1', '')
 

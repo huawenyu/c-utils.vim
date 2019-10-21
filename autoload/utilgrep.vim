@@ -5,7 +5,7 @@ function! utilgrep#Grep(add, sel, ...)
 
   let l:cmd = "GrepperRg"
   let l:param = ""
-  let l:boundry = " -- "
+  let l:boundry = " -F "
 
   if a:add == 0
     let l:cmd = "GrepAdd"

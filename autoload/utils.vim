@@ -284,6 +284,21 @@ function! utils#GetSelected(fname)
     endif
 endfunction
 
+function! utils#MarkSelected()
+    "let cursor = getpos('.')
+    " Why is this not a built-in Vim script function?!
+    let [lnum1, col1] = getpos("'<")[1:2]
+    let [lnum2, col2] = getpos("'>")[1:2]
+    if lnum1 != lnum2
+        let byte1 = line2byte(lnum1)
+        let byte2 = line2byte(lnum2)
+        exec 'delmarks un'
+        exec 'goto'. byte1 . '| norm mu'
+        exec 'goto'. byte2 . '| norm mn'
+    endif
+    "call setpos('.', cursor)
+endfunction
+
 function! utils#AppendToFile(file, lines)
     call writefile(a:lines, a:file, "a")
 endfunction

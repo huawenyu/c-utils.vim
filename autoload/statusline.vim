@@ -27,16 +27,15 @@ endfunction
 function! statusline#simple_info()
   set laststatus=2                             " always show statusbar
 
-  setlocal statusline=[%n]\   "space
-  setlocal statusline+=%{statusline#GetFuncName()}\  " space
-  setlocal statusline+=\ :%f
-
-  setlocal statusline+=%<
-  setlocal statusline+=%=
-  setlocal statusline+=%m
+  let &statusline  = '[%n] '
+  let &statusline .= '%{statusline#GetFuncName()} '
+  let &statusline .= ' :%f'
+  let &statusline .= '%<'
+  let &statusline .= '%='
+  let &statusline .= '%m'
 
   "setlocal statusline+=%-18(%02.2c[%02.2B]L%l/%L%)\ "space
-  setlocal statusline+=L%L/%l\ %P\ %02.2c[%02.2B]%y\     "space
+  let &statusline .= 'L%L/%l %P %02.2c[%02.2B]%y '
 
   "setlocal statusline+=%h%m%r%w                     " status flags
   "setlocal statusline+=\[%{strlen(&ft)?&ft:'none'}] " file type

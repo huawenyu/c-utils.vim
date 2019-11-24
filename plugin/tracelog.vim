@@ -20,10 +20,7 @@ if !executable('cscope') || !executable('ctags')
 endif
 
 if !exists('g:tracelog_default_dir')
-    echom 'Please define trace config dir:'
-    echom '    let g:tracelog_default_dir = $HOME . "/script/trace-wad/"'
-    echom 'And the dir have files "logclear" '
-    finish
+    let g:tracelog_default_dir = $HOME . "/script/trace-wad/"
 endif
 
 let g:loaded_tracelog = 1

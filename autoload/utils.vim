@@ -147,9 +147,9 @@ endfunction
 " then in <gdb> source log.crash
 function! utils#Tracecrash()
     exec ":silent %normal \<ESC>0i#"
-    exec ":'a,'b normal df["
-    exec ":'a,'b normal f]d$"
-    exec ":'a,'b normal Il *"
+    exec ":'u,'n normal df["
+    exec ":'u,'n normal f]d$"
+    exec ":'u,'n normal Il *"
 endfunction
 
 function! utils#VoomInsert(vsel)

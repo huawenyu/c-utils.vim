@@ -1,8 +1,6 @@
 " autocmd QuickfixCmdPost make,grep,vimgrep copen
 " @add 0 append-mode, 1 new-mode, 2 have special dir 'wad' mode
 function! utilgrep#Grep(add, sel, ...)
-  execute 'norm mP'
-
   let l:cmd = "GrepperRg"
   let l:param = ""
   let l:boundry = " -F "

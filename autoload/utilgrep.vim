@@ -22,7 +22,7 @@ function! utilgrep#Grep(add, sel, ...)
   endif
 
   if !empty(search_str)
-    let search_str = input("Search? ", search_str)
+    "let search_str = input("Search? ", search_str)
     if exists("a:000") && a:add == 2
       return l:cmd .' '. l:param . l:boundry . shellescape(search_str,1)." ".join(a:000, " ")."daemon/wad"
     else

@@ -14,9 +14,11 @@ if &cp || v:version < 700
     finish
 endif
 
-if !executable('cscope') || !executable('ctags')
-    echom 'Please install tools: cscope, ctags'
-    finish
+if LINUX()
+    if !executable('cscope') || !executable('ctags')
+        echom 'Please install tools: cscope, ctags'
+        finish
+    endif
 endif
 
 if !exists('g:tracelog_default_dir')

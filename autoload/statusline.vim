@@ -1,4 +1,7 @@
 function! statusline#GetFuncName()
+  let lft = &ft
+  if lft ==? "log" | return | endif
+
   let lnum = line(".")
   let col = col(".")
   let l:cmd = getline(search("^[^ \t#/]\\{2}.*[^:]\s*$", 'bW'))

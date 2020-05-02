@@ -57,15 +57,19 @@ function! utils#Columnline()
 endfunction
 
 
-" Don't use previewwindow/ptag, it'll auto close when <Esc>
-" - if previewwindow existed and current window is not previewer, show declare in it.
-" -                              current window is itself, try to find right-window
-"                                                          found and show in it.
-"                                                          not found, show in current-window (also previewwindow)
-" - if previewwindow not existed, try to find right-window
-"                               found and show in it.
-"                               not found, using ptag
-" - If tag existed (the show window content changed), please move the line on the top of the window
+" @note the cons of previewwindow/ptag: <Esc> will close it
+" @detail: me - current window
+"    - if has previewwindow
+"        + is me,
+"            + find other right-window and showtag
+"            + otherwise showtag in me
+"        + otherwise, showtag in me (also previewwindow)
+"    - otherwise:
+"        + find right-window and showtag.
+"        + otherwise,
+"            + find left-window and showtag in me (me is also the right window itself)
+"            + otherwise using ptag which auto open previewwindow.
+"    - view it as top line if tag existed.
 function! utils#Declaration()
     call genutils#MarkActiveWindow()
 
@@ -95,13 +99,22 @@ function! utils#Declaration()
     if !l:preview_nr || l:is_preview_self
         call genutils#RestoreActiveWindow()
 
-        " Move right window.
+        " try focus the right window.
         wincmd l
         let oline = line('.')
 
         let l:tag_nr = winnr()
         if l:tag_nr == l:act_nr
-            let l:strcmd = l:strcmd_ptag
+            " try focus the left window.
+            wincmd h
+            let l:left_nr = winnr()
+            if l:tag_nr != l:left_nr
+                " backto the right window, also the 1st active window
+                wincmd l
+            else
+                let l:strcmd = l:strcmd_ptag
+            endif
+
             execute l:strcmd
         else
             execute l:strcmd

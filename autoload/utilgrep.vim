@@ -10,7 +10,14 @@
 function! utilgrep#Grep(append, sel, dir, quickfix, ...)
     let l:cmd = "GrepperRg"
     let l:param = ""
-    let l:boundry = " -F "
+
+    " https://github.com/BurntSushi/ripgrep/issues/639
+    " Q: $ rg -F "->"
+    "    error: Found argument '->' which wasn't expected, or isn't valid in this context
+    " A: `-F` is a flag that does not accept any arguments, as documented.
+    "    The invocation rg -F "->" -- therefore doesn't really make sense. rg -F -- -> or rg -F -e -> should both work.
+    "
+    let l:boundry = " -F -- "
 
     let g:grepper.quickfix = a:quickfix
     let g:grepper.append = a:append

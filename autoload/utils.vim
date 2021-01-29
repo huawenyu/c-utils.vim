@@ -267,11 +267,27 @@ endfunction
 
 " Get current word or selected-range
 " @param fname Write to the file, if no <fname>, return the string
-function! utils#GetSelected(fname)
-    let strMode = visualmode()
-    if empty(strMode)
-        let ret_str = expand('<cword>')
+function! utils#GetSelected(mode, ...)
+    if a:0 > 0
+        let fname = a:1
     else
+        let fname = ''
+    end
+
+    if empty(a:mode)
+        let mode = visualmode()
+        if empty(mode)
+            let mode = 'n'
+        else
+            let mode = 'v'
+        endif
+    else
+        let mode = a:mode
+    endif
+
+    if mode ==# 'n'
+        let ret_str = expand('<cword>')
+    elseif mode ==# 'v'
         " Why is this not a built-in Vim script function?!
         let [lnum1, col1] = getpos("'<")[1:2]
         let [lnum2, col2] = getpos("'>")[1:2]
@@ -286,13 +302,13 @@ function! utils#GetSelected(fname)
         endif
     endif
 
-    if empty(a:fname)
+    if empty(fname)
         return ret_str
     else
         new
         setlocal buftype=nofile bufhidden=hide noswapfile nobuflisted
         put=ret_str
-        exec 'w! '.a:fname
+        exec 'w! '. fname
         q
     endif
 endfunction

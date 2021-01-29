@@ -27,7 +27,7 @@ function! utilgrep#Grep(append, sel, dir, quickfix, ...)
         " when the selection is limited to within one line
         let l:sel_len = virtcol("'>") - virtcol("'<") + 1
         if l:sel_len >= 2
-            let search_str = utils#GetSelected("")
+            let search_str = utils#GetSelected('v')
         endif
     else
         let search_str = expand('<cword>')

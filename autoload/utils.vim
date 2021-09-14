@@ -191,35 +191,50 @@ function! utils#GetFileFrmCursor()
     " filename under the cursor
     let file_name = expand('<cfile>')
     if !strlen(file_name)
-        echo 'NO FILE UNDER CURSOR'
+        echo 'No file under cursor.'
         return
     endif
 
+    " Remove git prefix 'a/', 'b/' from filepath
+    if !filereadable(file_name)
+        let file_name = trim(file_name, "a/")
+    endif
+    if !filereadable(file_name)
+        let file_name = trim(file_name, "b/")
+    endif
+
     " look for a line number separated by a :
-    let line_number = 0
+    let line_number = ""
+    let save_pos = getpos(".")
     if search('\%#\f*:\zs[0-9]\+')
         " change the 'iskeyword' option temporarily to pick up just numbers
         let temp = &iskeyword
         set iskeyword=48-57
-        let line_number = expand('<cword>')
+        let line_number = "+". expand('<cword>')
         exe 'set iskeyword=' . temp
     endif
+    call setpos('.', save_pos)
 
     return [file_name, line_number]
 endfunction
 
-function! utils#GotoFileWithLineNum()
+function! utils#GotoFileWithLineNum(newwin)
     let file_info = utils#GetFileFrmCursor()
-    exe 'e '.file_info[0]
-    if file_info[1]
-        exe file_info[1]
+    " Open new window if requested
+    if a:newwin
+        new
     endif
+    execute 'find ' . file_info[1] . ' ' . file_info[0]
 endfunction
 
 " open file in previewwindow
 function! utils#GotoFileWithPreview()
     call genutils#MarkActiveWindow()
     let file_info = utils#GetFileFrmCursor()
+    if len(file_info) == 0
+        echo 'No file under cursor.'
+        return
+    endif
 
     let l:act_nr = winnr()
     let l:have_preview = 0
@@ -247,18 +262,12 @@ function! utils#GotoFileWithPreview()
 
     if l:preview_nr > 0
         call genutils#MoveCursorToWindow(l:preview_nr)
-        exe 'e '.file_info[0]
-        if file_info[1]
-            exe file_info[1]
-        endif
+        execute 'find ' . file_info[1] . ' ' . file_info[0]
     else
         let winnr = genutils#GetPreviewWinnr()
         if winnr > 0
             call genutils#MoveCursorToWindow(winnr)
-            exe 'e '.file_info[0]
-            if file_info[1]
-                exe file_info[1]
-            endif
+            execute 'find ' . file_info[1] . ' ' . file_info[0]
         endif
     endif
 

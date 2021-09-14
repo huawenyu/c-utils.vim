@@ -16,7 +16,7 @@ endif
 
 if LINUX()
     if !executable('cscope') || !executable('ctags')
-        echom 'Please install tools: cscope, ctags'
+        echom '[c-utils.vim] Please install tools: cscope, ctags'
         finish
     endif
 endif

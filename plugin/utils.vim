@@ -28,7 +28,7 @@ function! Resize(dir)
       let x = 'top'
     endif
   elseif '>' == a:dir || '<' == a:dir
-    execute "normal \<c-w>h"
+ ;   execute "normal \<c-w>h"
     let left = winnr()
     if left != this
       execute "normal \<c-w>l"

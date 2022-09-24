@@ -46,8 +46,8 @@ if g:c_utils_map
     vnoremap  <leader>vv    :<C-\>e utilgrep#Grep(0, 1, "",           1)<cr>
     vnoremap         ;vv    :<C-\>e utilgrep#Grep(0, 1, "",           1)<cr>
 
-    Shortcut!  ;gg    Search wad
-    Shortcut!  ;vv    Search all
+    silent! Shortcut!  ;gg    Search wad
+    silent! Shortcut!  ;vv    Search all
 
     " Giveback the 'g' to git
     " nnoremap ;gg :<C-\>e utilgrep#Grep(0, 0, "daemon/wad", 0)<cr>
@@ -57,7 +57,7 @@ if g:c_utils_map
 
     nnoremap gf :<c-u>call utils#GotoFileWithLineNum(0)<CR>
     nnoremap <silent> <leader>gf :<c-u>call utils#GotoFileWithPreview()<CR>
-    Shortcut! <space>gf    File Goto preview
+    silent! Shortcut! <space>gf    File Goto preview
 
 endif
 

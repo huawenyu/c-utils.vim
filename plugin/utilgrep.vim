@@ -31,33 +31,20 @@ let g:c_utils_map = get(g:, 'c_utils_map', 0)
 if g:c_utils_map
     let g:c_utils_prefer_dir = get(g:, 'c_utils_prefer_dir', '')
 
-    nnoremap         ;bb    :Rg <c-r>=utils#GetSelected('n')<cr>
-    nnoremap  <leader>bb    :Rg <c-r>=utils#GetSelected('n')<cr>
-    " vnoremap         ;bb    :<c-u>Rg <c-r>=utils#GetSelected('v')<cr>
-    " vnoremap  <leader>bb    :<c-u>Rg <c-r>=utils#GetSelected('v')<cr>
+    nnoremap         ;bb    :"Search-rg all         "<c-U>Rg <c-r>=utils#GetSelected('n')<cr>
+    nnoremap  <leader>bb    :"Search-rg all         "<c-U>Rg <c-r>=utils#GetSelected('n')<cr>
 
-    nnoremap  <leader>gg    :<C-\>e utilgrep#Grep(0, 0, g:c_utils_prefer_dir, 1)<cr>
-    nnoremap         ;gg    :<C-\>e utilgrep#Grep(0, 0, "",           1)<cr>
+    nnoremap  <leader>gg    :"Search 'g:c_utils_prefer_dir' from '.vimrc.before'  "<c-U><C-\>e utilgrep#Grep(0, 0, g:c_utils_prefer_dir, 1)<cr>
+    nnoremap         ;gg    :"Search 'g:c_utils_prefer_dir' from '.vimrc.before'  "<c-U><C-\>e utilgrep#Grep(0, 0, "",           1)<cr>
     vnoremap  <leader>gg    :<C-\>e utilgrep#Grep(0, 1, g:c_utils_prefer_dir, 1)<cr>
     vnoremap         ;gg    :<C-\>e utilgrep#Grep(0, 1, "",           1)<cr>
 
-    nnoremap  <leader>vv    :<C-\>e utilgrep#Grep(0, 0, "",           1)<cr>
-    nnoremap         ;vv    :<C-\>e utilgrep#Grep(0, 0, "",           1)<cr>
+    nnoremap  <leader>vv    :"Search all            "<c-U><C-\>e utilgrep#Grep(0, 0, "",           1)<cr>
+    nnoremap         ;vv    :"Search all            "<c-U><C-\>e utilgrep#Grep(0, 0, "",           1)<cr>
     vnoremap  <leader>vv    :<C-\>e utilgrep#Grep(0, 1, "",           1)<cr>
     vnoremap         ;vv    :<C-\>e utilgrep#Grep(0, 1, "",           1)<cr>
 
-    silent! Shortcut!  ;gg    Search wad
-    silent! Shortcut!  ;vv    Search all
-
-    " Giveback the 'g' to git
-    " nnoremap ;gg :<C-\>e utilgrep#Grep(0, 0, "daemon/wad", 0)<cr>
-    " vnoremap ;gg :<C-\>e utilgrep#Grep(0, 1, "daemon/wad", 0)<cr>
-    " nnoremap ;vv :<C-\>e utilgrep#Grep(0, 0, "", 0)<cr>
-    " vnoremap ;vv :<C-\>e utilgrep#Grep(0, 1, "", 0)<cr>
-
-    nnoremap gf :<c-u>call utils#GotoFileWithLineNum(0)<CR>
-    nnoremap <silent> <leader>gf :<c-u>call utils#GotoFileWithPreview()<CR>
-    silent! Shortcut! <space>gf    File Goto preview
-
+    nnoremap gf :"open File:number          "<c-U>call utils#GotoFileWithLineNum(0)<CR>
+    nnoremap <silent> <leader>gf :"open File in preview window   "<c-U>call utils#GotoFileWithPreview()<CR>
 endif
 

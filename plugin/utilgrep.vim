@@ -43,8 +43,5 @@ if g:c_utils_map
     nnoremap         ;vv    :"Search all            "<c-U><C-\>e utilgrep#Grep(0, 0, "",           1)<cr>
     vnoremap  <leader>vv    :<C-\>e utilgrep#Grep(0, 1, "",           1)<cr>
     vnoremap         ;vv    :<C-\>e utilgrep#Grep(0, 1, "",           1)<cr>
-
-    nnoremap gf :"open File:number          "<c-U>call utils#GotoFileWithLineNum(0)<CR>
-    nnoremap <silent> <leader>gf :"open File in preview window   "<c-U>call utils#GotoFileWithPreview()<CR>
 endif
 

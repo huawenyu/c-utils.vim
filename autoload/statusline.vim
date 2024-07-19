@@ -42,7 +42,7 @@ fun! statusline#simple_info()
 
     let &statusline  = '[%n] '
     let &statusline .= '%{statusline#GetFuncName2()} '
-    let &statusline .= ' :%f'
+    let &statusline .= '  %f'
     let &statusline .= '%<'
     let &statusline .= '%='
     let &statusline .= '%m'

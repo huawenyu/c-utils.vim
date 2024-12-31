@@ -26,22 +26,3 @@ if !exists("g:grepprg")
   endif
 endif
 
-
-let g:c_utils_map = get(g:, 'c_utils_map', 0)
-if g:c_utils_map
-    let g:c_utils_prefer_dir = get(g:, 'c_utils_prefer_dir', '')
-
-    nnoremap         ;bb    :"Search-rg all         "<c-U>Rg <c-r>=utils#GetSelected('n')<cr>
-    nnoremap  <leader>bb    :"Search-rg all         "<c-U>Rg <c-r>=utils#GetSelected('n')<cr>
-
-    nnoremap  <leader>gg    :"Search 'g:c_utils_prefer_dir' from '.vimrc.before'  "<c-U><C-\>e utilgrep#Grep(0, 0, exists('g:c_utils_prefer_dir') ? g:c_utils_prefer_dir : 'daemon/wad', 1)<cr>
-    nnoremap         ;gg    :"Search 'g:c_utils_prefer_dir' from '.vimrc.before'  "<c-U><C-\>e utilgrep#Grep(0, 0, exists('g:c_utils_prefer_dir') ? g:c_utils_prefer_dir : 'daemon/wad', 1)<cr>
-    vnoremap  <leader>gg    :<C-\>e utilgrep#Grep(0, 1, g:c_utils_prefer_dir, 1)<cr>
-    vnoremap         ;gg    :<C-\>e utilgrep#Grep(0, 1, "",           1)<cr>
-
-    nnoremap  <leader>vv    :"Search all            "<c-U><C-\>e utilgrep#Grep(0, 0, "",           1)<cr>
-    nnoremap         ;vv    :"Search all            "<c-U><C-\>e utilgrep#Grep(0, 0, "",           1)<cr>
-    vnoremap  <leader>vv    :<C-\>e utilgrep#Grep(0, 1, "",           1)<cr>
-    vnoremap         ;vv    :<C-\>e utilgrep#Grep(0, 1, "",           1)<cr>
-endif
-

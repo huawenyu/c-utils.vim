@@ -14,11 +14,10 @@ if &cp || v:version < 700
     finish
 endif
 
-if LINUX()
-    if !executable('cscope') || !executable('ctags')
-        echom '[c-utils.vim] Please install tools: cscope, ctags'
-        finish
-    endif
+" LINUX() undefined - removed check
+if !executable('cscope') || !executable('ctags')
+    echom '[c-utils.vim] Please install tools: cscope, ctags'
+    finish
 endif
 
 if !exists('g:tracelog_default_dir')

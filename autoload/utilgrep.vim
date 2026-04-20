@@ -23,16 +23,21 @@ function! utilgrep#Grep(append, sel, dir, quickfix, ...)
     let g:grepper.append = a:append
 
     let search_str = ""
-    if a:sel == 1
-        " when the selection is limited to within one line
-        let l:sel_len = virtcol("'>") - virtcol("'<") + 1
-        if l:sel_len >= 2
-            let search_str = utils#GetSelected('v')
+    try
+        if a:sel == 1
+            " when the selection is limited to within one line
+            let l:sel_len = virtcol("'>") - virtcol("'<") + 1
+            if l:sel_len >= 2
+                let search_str = utils#GetSelected('v')
+            endif
+        else
+            let search_str = expand('<cword>')
+            let l:boundry = " -w "
         endif
-    else
-        let search_str = expand('<cword>')
-        let l:boundry = " -w "
-    endif
+    catch /.*/
+        " This catches any other unexpected errors
+        return ""
+    endtry
 
     if !empty(search_str)
         "let search_str = input("Search? ", search_str)

@@ -8,7 +8,12 @@ function! utilquickfix#QuickfixFilenames()
 endfunction
 
 function! utilquickfix#LocalEasyReplace()
-  return "Qargs | argdo %s/\\<" . expand('<cword>') . "\\>/" . expand('<cword>') . "/gc | update"
+  try
+    let cword = expand('<cword>')
+  catch
+    let cword = ""
+  endtry
+  return "Qargs | argdo %s/\\<" . cword . "\\>/" . cword . "/gc | update"
 endfunction
 
 "" filter  :Qfilter pattern  <OR>  :Qfilter! pattern
